@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Peepcoin-qt
-Comment=Peepcoin QT Wallet
-Exec=peepcoin-qt
-Icon=peepcoin
-Categories=Utility;
