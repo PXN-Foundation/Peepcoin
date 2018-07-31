@@ -1,0 +1,103 @@
+Copyright (c) 2009-2012 Bitcoin Developers
+Distributed under the MIT/X11 software license, see the accompanying file
+license.txt or http://www.opensource.org/licenses/mit-license.php.  This
+product includes software developed by the OpenSSL Project for use in the
+OpenSSL Toolkit (http://www.openssl.org/).  This product includes cryptographic
+software written by Eric Young (eay@cryptsoft.com) and UPnP software written by
+Thomas Bernard.
+
+Homebrew (current updated build steps)
+- Install Homebrew - http://brew.sh
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+- Install Xcode and Accept License - allow it to install command line tools
+
+-Install Git
+brew install git
+
+- Install Berkley DB 4.8
+brew install berkeley-db4
+
+- Install OpenSSL
+brew install openssl
+
+- Install Boost
+brew install boost@1.60
+brew link boost@1.60 -force
+(also testing with boost@1.57 for wallet.dat issue)
+
+- Install QT
+brew install qt5
+brew link qt5 -force
+
+- Install QREncode
+brew install libqrencode
+
+- Install WGet
+brew install wget
+
+- Download, compile, install Miniupnpc
+wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz
+tar xvzf miniupnpc.tar.gz
+mv miniupnpc-1.9.20150206 miniupnpc
+cd miniupnpc
+make -f Makefile upnpc-static
+sudo INSTALLPREFIX=/usr/local make install
+
+- Clone DAPSCoin GitHub
+https://github.com/DAPSCoin/PeepCoin-TheCoinForThePeople.git
+
+- Change to PeepCoin-TheCoinForThePeople directory
+cd PeepCoin-TheCoinForThePeople/src
+
+- Build Peepcoind
+qmake RELEASE=1 STATIC=1
+make
+strip peepcoind
+
+-----------------------------------------
+Old Mac OS X peepcoind build instructions
+Laszlo Hanyecz <solar@heliacal.net>
+Douglas Huff <dhuff@jrbobdobbs.org>
+
+
+See readme-qt.rst for instructions on building Peepcoin QT, the
+graphical user interface.
+
+Tested on 10.5 and 10.6 intel.  PPC is not supported because it's big-endian.
+
+All of the commands should be executed in Terminal.app.. it's in
+/Applications/Utilities
+
+You need to install XCode with all the options checked so that the compiler and
+everything is available in /usr not just /Developer I think it comes on the DVD
+but you can get the current version from http://developer.apple.com
+
+
+1.  Clone the github tree to get the source code:
+
+git clone git@github.com:rat4/peepcoin.git peepcoin
+
+2.  Download and install MacPorts from http://www.macports.org/
+
+2a. (for 10.7 Lion)
+    Edit /opt/local/etc/macports/macports.conf and uncomment "build_arch i386"
+
+3.  Install dependencies from MacPorts
+
+sudo port install boost db48 openssl miniupnpc
+
+Optionally install qrencode (and set USE_QRCODE=1):
+sudo port install qrencode
+
+4.  Now you should be able to build peepcoind:
+
+cd peepcoin/src
+make -f makefile.osx
+
+Run:
+  ./peepcoind --help  # for a list of command-line options.
+Run
+  ./peepcoind -daemon # to start the peepcoin daemon.
+Run
+  ./peepcoind help # When the daemon is running, to get a list of RPC commands
