@@ -1,0 +1,34 @@
+Peepcoin v1.0.3.0 BETA
+
+Copyright (c) 2009-2013 The Bitcoin Core developers
+Copyright (c) 2009-2013 Bitcoin Developers
+Copyright (c) 2013- Libzerocoin Developers
+Copyright (c) 2016 Peepcoin Developers
+Copyright (c) 2018- DAPS Development Team
+Distributed under the MIT/X11 software license, see the accompanying
+file license.txt or http://www.opensource.org/licenses/mit-license.php.
+This product includes software developed by the OpenSSL Project for use in
+the OpenSSL Toolkit (http://www.openssl.org/).  This product includes
+cryptographic software written by Eric Young (eay@cryptsoft.com).
+
+
+Intro
+-----
+Peepcoin is a free open source project derived from Bitcoin, 
+with the goal of providing a long-term energy-efficient scrypt-based crypto-currency. 
+Built on the foundation of Bitcoin using the Libzerocoin extention, 
+Peepcoin was Proof-Of-Work until August 2016, 
+then it became pure Proof-Of-Stake. 
+
+The original developer abandoned the coin, 
+in February 2018 a new Peepcoin team was created 
+with the goal of rebranding and swapping Peepcoin. 
+The "DAPS" Team consists of ex-Peepcoin community members and new developers, 
+working to build Peepcoin into a more modern coin prior to a swap to DAPS. 
+This will include an upgrade of Peepcoin wallets released under official DAPS sources.
+
+All DAPS Team products are fully vetted, secure, 
+and created by fully ID'd members of the crypto community. 
+Only the official DAPScoin Github repo will have this guarantee. 
+Any Documentation, readme, fork, or otherwise exclusing 
+this notice should be considered unofficial.
