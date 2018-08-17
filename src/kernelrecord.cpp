@@ -7,15 +7,18 @@ using namespace std;
 
 bool KernelRecord::showTransaction(const CWalletTx &wtx)
 {
-    if (wtx.IsCoinBase())
+    if (!wtx.IsTrusted() || !wtx.IsInMainChain())
     {
-        if (wtx.GetDepthInMainChain() < 2)
-        {
-            return false;
-        }
+        return false;
     }
 
-    return true;
+    else
+    {
+        return true;
+    }
+
+    return false;
+
 }
 
 /*
