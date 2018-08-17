@@ -206,6 +206,7 @@ int main(int argc, char *argv[])
     QSplashScreen splash(QPixmap(":/images/splash"), 0);
     if (GetBoolArg("-splash", true) && !GetBoolArg("-min"))
     {
+		splash.setEnabled(false);
         splash.show();
         splashref = &splash;
     }
@@ -257,6 +258,14 @@ int main(int argc, char *argv[])
                 window.setWalletModel(0);
                 guiref = 0;
             }
+			
+			// Show a persistent splash screen while shutting down
+            QSplashScreen splash(QPixmap(":/images/splash"), 0);
+            splash.setEnabled(false);
+            splash.show();
+            splashref = &splash;
+            uiInterface.InitMessage(_("PeepCoin is shutting down, please do not turn off your computer..."));
+			
             // Shutdown the core and its threads, but don't exit Bitcoin-Qt here
             Shutdown(NULL);
         }
