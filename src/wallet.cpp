@@ -15,11 +15,10 @@
 using namespace std;
 
 
-
 /* Try to combine inputs while staking up to this limit */
-int64_t nCombineThreshold = 25000000;
+int64_t nCombineThreshold;
 /* Don't split outputs while staking below this limit */
-int64_t nSplitThreshold = 2 * MIN_STAKE_AMOUNT;
+int64_t nSplitThreshold;
 /* Inputs below this limit are not staking */
 int64_t nStakeMinValue = 1 * COIN;
 
@@ -1716,11 +1715,19 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
 
                 // Split large inputs into two near halves if condition is met
                 // Difference between STAKECOMBINATION and normal is that inputs
-                // smaller than nSplitThreshold are not splitted.
+                // smaller than nSplitThreshold are not split.
 
+			if(fSplitEnabled) {
                 if(nCredit >= nSplitThreshold && GetWeight(block.GetBlockTime(), (int64_t)txNew.nTime) < nStakeSplitAge){
                        txNew.vout.push_back(CTxOut(0, scriptPubKeyOut)); //split stake
                 }
+		
+			}else{
+                if (GetWeight(block.GetBlockTime(), (int64_t)txNew.nTime) < nStakeSplitAge){
+                       txNew.vout.push_back(CTxOut(0, scriptPubKeyOut)); //split stake
+                }
+		
+			}
 
                 if (fDebug && GetBoolArg("-printcoinstake"))
                     printf("CreateCoinStake : added kernel type=%d\n", whichType);

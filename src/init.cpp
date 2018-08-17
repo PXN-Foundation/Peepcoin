@@ -21,7 +21,6 @@
 #include <signal.h>
 #endif
 
-
 using namespace std;
 using namespace boost;
 
@@ -33,6 +32,8 @@ unsigned int nNodeLifespan;
 unsigned int nDerivationMethodIndex;
 unsigned int nMinerSleep;
 bool fUseFastIndex;
+bool fSplitEnabled;
+bool fCombineEnabled;
 enum Checkpoints::CPMode CheckpointsMode;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -383,7 +384,9 @@ bool AppInit2()
     nNodeLifespan = GetArg("-addrlifespan", 7);
     fUseFastIndex = GetBoolArg("-fastindex", true);
     nMinerSleep = GetArg("-minersleep", 500);
-
+	fSplitEnabled = GetBoolArg("-enablestakesplit");
+	fCombineEnabled = GetBoolArg("-enablestakecombine");
+	
 
     if(fTestNet) {
         nStakeMinTime = (uint64_t)GetArg("-stakemintime", 2);
@@ -510,26 +513,51 @@ bool AppInit2()
           return(InitError("Invalid amount for -stakeminvalue=<amount>'"));
         //qDebug() << "nStakeMinValue: " << nStakeMinValue;
     }
-
-    /* Try to combine inputs while staking up to this limit */
+	/*If enablestakecombine=1, Enable Stake Combine */
+	/*Try to combine inputs while staking up to this limit */
+if(fCombineEnabled) {
+	//qDebug() << "Stake Combine Enabled.";
+	printf("Stake Combine Enabled.\n");
     if(mapArgs.count("-stakecombine")) {
         nCombineThreshold = atoi(mapArgs["-stakecombine"]);
         if(nCombineThreshold < 0 )
-          return(InitError("Invalid amount for -stakecombine=<amount>'"));
+          return(InitError("Invalid amount for -stakecombine=<amount>' with -enablestakecombine=1"));
          //qDebug() << "nCombineThreshold:" << nCombineThreshold;
         if(nCombineThreshold < MIN_STAKE_AMOUNT)
           nCombineThreshold = MIN_STAKE_AMOUNT;
     }
+}else{
+	nCombineThreshold = 0;
+	//qDebug() << "Stake Combine Disabled.";
+	//qDebug() << "nCombineThreshold:" << nCombineThreshold;
+	printf("Stake Combine Disabled.\n");
+}
 
-    /* Don't split outputs while staking below this limit */
+    /* If enablestakesplit=1, Enable Stake Splitting */
+	/* Don't split outputs while staking below this limit */	
+	
+if(fSplitEnabled) {
+	//qDebug() << "Stake Split Enabled.\n";
+	printf("Stake Split Enabled.\n");
     if(mapArgs.count("-stakesplit")) {
         nSplitThreshold = atoi(mapArgs["-stakesplit"]);
+		
+		//qDebug() << "nSplitThreshold:" << nSplitThreshold;
+				
         if(nSplitThreshold < 0 )
-          return(InitError("Invalid amount for -stakesplit=<amount>'"));
-        //qDebug() << "nSplitThreshold:" << nSplitThreshold;
-        if(nSplitThreshold < 2 * MIN_STAKE_AMOUNT)
-          nSplitThreshold = 2 * MIN_STAKE_AMOUNT;
+          return(InitError("Invalid amount for -stakesplit=<amount>' with -enablestakesplit=1"));
+        
+        //if(nSplitThreshold < 2 * MIN_STAKE_AMOUNT)
+          //nSplitThreshold = 2 * MIN_STAKE_AMOUNT;
+	  
     }
+}else{
+	nSplitThreshold	= 0;
+	//qDebug() << "Stake Split Disabled.";
+	//qDebug() << "nSplitThreshold:" << nSplitThreshold;
+	printf("Stake Split Disabled.\n");
+	
+}
 
     // ********************************************************* Step 4: application initialization: dir lock, daemonize, pidfile, debug log
     // Sanity check

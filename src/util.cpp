@@ -1340,16 +1340,20 @@ void CreateConfigFile()
 {
 
     boost::filesystem::ofstream file(GetConfigFile());
+	file << "#Enable Stake Combine (0 - disabled [default], 1 - enabled) \n";
+	file << "enablestakecombine=0 \n";
+	file << "#Combine Peepcoin inputs below this value \n";
+	file << "stakecombine=0 \n";
+	file << "#Enable Stake Split (0 - disabled [default], 1 - enabled) \n";
+	file << "enablestakesplit=0 \n";
+	file << "#Splits staking outputs above this level \n";
+    file << "stakesplit=500000000 \n";
     file << "#Set minimum time for input stack to be considered for auto combine, in blockchain hours \n";
 	file << "stakemintime=0 \n";
     file << "#Set minimum confirms for an input stack to be auto combined \n";
     file << "stakemindepth=1 \n";
     file << "#Set minimum amount of coins to include in these checks (Example: If set to 100000, Peepcoin stacks below this would not be auto combined) \n";
     file << "stakeminvalue=1 \n";
-	file << "#Combine Peepcoin inputs below this value \n";
-	file << "stakecombine=0 \n";
-	file << "#Splits staking outputs above this level \n";
-    file << "stakesplit=500000000 \n";
 	file << "#PeepCoin Node List - Updated June 12, 2018 \n";
     file << "addnode=1.120.133.66 \n";
     file << "addnode=101.190.132.185 \n";
