@@ -285,6 +285,8 @@ QVariant MintingTableModel::data(const QModelIndex &index, int role) const
     if(!index.isValid())
         return QVariant();
     KernelRecord *rec = static_cast<KernelRecord*>(index.internalPointer());
+    int minAge;
+    int maxAge;
 
     switch(role)
     {
@@ -353,8 +355,9 @@ QVariant MintingTableModel::data(const QModelIndex &index, int role) const
         }
         break;
       case Qt::BackgroundColorRole:
-        int minAge = nStakeMinAge / 60 / 60 / 2;
-        int maxAge = nStakeMaxAge / 60 / 60 / 24;
+        minAge = nStakeMinAge / 60 / 60 / 2;
+        maxAge = nStakeMaxAge / 60 / 60 / 24;
+
         if(rec->getAge() < minAge)
         {
             return COLOR_MINT_YOUNG;
@@ -367,6 +370,10 @@ QVariant MintingTableModel::data(const QModelIndex &index, int role) const
         {
             return COLOR_MINT_OLD;
         }
+        break;
+	      
+      case AddressRole:
+        return QString::fromStdString(rec->address);
         break;
 
     }
