@@ -74,8 +74,8 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     trayIcon(0),
     notificator(0),
     rpcConsole(0),
-    nWeight(0),
-	spinnerFrame(0)
+    spinnerFrame(0),
+	nWeight(0)
 {
 	setFixedSize(1000, 542);
 	setMaximumSize(QWIDGETSIZE_MAX,QWIDGETSIZE_MAX);
@@ -232,13 +232,13 @@ void BitcoinGUI::createActions()
     overviewAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     tabGroup->addAction(overviewAction);
 
-    sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send coins"), this);
+    sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send Coins"), this);
     sendCoinsAction->setToolTip(tr("Send coins to a Peepcoin address"));
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendCoinsAction);
 
-    receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("&Receive coins"), this);
+    receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("&Receive Coins"), this);
     receiveCoinsAction->setToolTip(tr("Show the list of addresses for receiving payments"));
     receiveCoinsAction->setCheckable(true);
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
@@ -725,7 +725,7 @@ void BitcoinGUI::cpatexDOGEClicked()
 
 void BitcoinGUI::otherExchangesClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://www.dapscoin.com/markets"));
+	QDesktopServices::openUrl(QUrl("https://coinmarketcap.com/currencies/peepcoin/#markets"));
 }
 
 void BitcoinGUI::facebookActionClicked()
