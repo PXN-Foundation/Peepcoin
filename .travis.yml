@@ -52,6 +52,7 @@ before_deploy:
   python2.7 contrib/macdeploy/macdeployqtplus  -add-qt-tr $T -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app;
   ls -ltr;
   echo "DMG file";
+  fi
 
 deploy:
   provider: releases
