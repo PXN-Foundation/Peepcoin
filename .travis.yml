@@ -62,6 +62,6 @@ deploy:
       - "Peepcoin-Qt.tar.gz"
   skip_cleanup: true
   on:
-    repo: sibcool/Peepcoin
+    repo: PXN-Foundation/Peepcoin
     tags: true
     branch: UI
