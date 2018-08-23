@@ -39,10 +39,6 @@ install:
 
 script:
 - make
-- if [[ $TRAVIS_OS_NAME == linux ]]; then 
-     bash src/mxe-build.sh windows32-qt;
-     bash src/mxe-build.sh windows64-qt;
-  fi
 
 before_deploy:
 - ls -ltr
