@@ -35,23 +35,23 @@ install:
 - ls -ltr
 - cd  ${TRAVIS_BUILD_DIR}
 - chmod 755 src/leveldb/build_detect_platform
-- qmake RELEASE=1 USE_UPNP=- USE_QRCODE=1 Peepcoin-qt.pro
+- qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 Peepcoin-qt.pro
 
 script:
 - make
 
 before_deploy:
-- ls -ltr
 - if [[ $TRAVIS_OS_NAME == linux ]]; then 
   tar -czvf peepcoin-qt.tar.gz peepcoin-qt;
   fi
-- export QTDIR=/usr/local/Cellar/qt/5.11.1
-- chmod -R 755 contrib
-- echo "Before dmg packaging"
-- T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale)
-- python2.7 contrib/macdeploy/macdeployqtplus  -add-qt-tr $T -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app
-- ls -ltr
-- echo "DMG file"
+- if [[ $TRAVIS_OS_NAME == osx ]]; then 
+  export QTDIR=/usr/local/Cellar/qt/5.11.1;
+  chmod -R 755 contrib;
+  echo "Before dmg packaging";
+  T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale);
+  python2.7 contrib/macdeploy/macdeployqtplus  -add-qt-tr $T -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app;
+  ls -ltr;
+  echo "DMG file";
 
 deploy:
   provider: releases
@@ -59,7 +59,7 @@ deploy:
     secure: IXbLpxVraNMa1NDrKcJbiCVzarlVZkxOWnyOe3XAbqDtDF/V5I3+ljRduH5c4XbqI69G670H5zIiM1Hs/0NFAiMBj2Ptqg/vuJ/Ar4w3COPfv6LMZqiQDdxw3cCFxH79e/yxsW3DFbahB6hTFJ/iFGzAzPrUB7/xb+z7dS9NUCHmQYlt5g70zS0+WkJRYd+yGZz+OgGmcHTnFC2PuHoBei1iXAQLdi1Y90Ka56mo9SMinEd1fXfSYXjo9abfQVGP2fg5UBeUVmW9M8tyXZ0tGyzAxe4GP71bOdPMGPJ34N8OBtoNZzfGT7jumC+dfG1Dh9VHjpXXuKj7jxVWnQQfSXX5N799fWy8mOmKdI7kH3mAw4lJhecmxehFXefHBkLc7Xte34K+Xa6Och60CxX2O2jjVJhxGtcXLBPy+eW9tiz1WXgAgaY04vlzawcO5n/7eejIUP8k9a0wq13r2pO6up/Pe/wHrKAh8khkqPFmhRDDKK25H0+/jvmc7eZkl6VY4HuM/NKRqvL+nOrif5+UtuMQFWL9FV/kbJcQ/YVHyzHkJTfnRYfwdpiw7I4Kd+xiNS2QMu8RbX6RCnc5Tk1LrcR6AWeU83GsAEA3R/VsttZyKLT6K6R6cvnSYaVo4t/o/NTjVlgP+q+jUE7Ln/+glnsNtHsablbBNnivNYAL+Vo=
   file: 
       - "Peepcoin-Qt.dmg"
-      - "Peepcoin-Qt.tar.gz"
+      - "peepcoin-qt.tar.gz"
   skip_cleanup: true
   on:
     repo: PXN-Foundation/Peepcoin
