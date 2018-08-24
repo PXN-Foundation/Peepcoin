@@ -41,8 +41,23 @@ wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 tar zxvf db-4.8.30.NC.tar.gz
 
 cd db-4.8.30.NC
-touch compile-db.sh
-chmod ugo+x compile-db.sh
+MXE_PATH=/usr/lib/mxe
+sed -i "s/WinIoCtl.h/winioctl.h/g" src/dbinc/win_db.h
+mkdir build_mxe
+cd build_mxe
+
+CC=$MXE_PATH/usr/bin/${MXE_TARGET}-gcc \
+CXX=$MXE_PATH/usr/bin/${MXE_TARGET}-g++ \
+../dist/configure \
+    --disable-replication \
+    --enable-mingw \
+    --enable-cxx \
+    --host x86 \
+    --prefix=$MXE_PATH/usr/${MXE_TARGET}
+
+make
+
+make install
 
 sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
