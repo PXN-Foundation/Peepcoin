@@ -57,7 +57,7 @@ CXX=$MXE_PATH/usr/bin/${MXE_TARGET}-g++ \
 
 make
 
-make install
+sudo make install
 
 sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
@@ -68,6 +68,8 @@ NCPU=`cat /proc/cpuinfo | grep -c ^processor`
 # Some variables used by both Qt and daemon builds.
 MXEDIR=/usr/lib/mxe
 export PATH=$PATH:$MXEDIR/usr/bin
+BDB_INCLUDE_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/include
+BDB_LIB_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/lib
 
 # Invoke the magical commands to get Peepcoin built.
 if [ $QT_BUILD == "no" ]; then
@@ -75,8 +77,6 @@ if [ $QT_BUILD == "no" ]; then
     make -f makefile.linux-mingw -j $NCPU \
         DEPSDIR=$MXEDIR/usr/$MXE_TARGET TARGET_PLATFORM=$CPU_TARGET
 else
-    BDB_INCLUDE_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/include
-    BDB_LIB_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/lib
     sudo apt-get --yes install mxe-${MXE_TARGET}-qt5
     sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
     cd  ${TRAVIS_BUILD_DIR}
