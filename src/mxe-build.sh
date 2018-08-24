@@ -83,7 +83,7 @@ else
 
 
 
-${MXE_TARGET}-qmake-qt5 \
+$CPU_TARGET-w64-mingw32.static-qmake-qt5 \
 	BOOST_LIB_SUFFIX=-mt \
 	BOOST_THREAD_LIB_SUFFIX=_win32-mt \
 	BOOST_INCLUDE_PATH=$MXE_INCLUDE_PATH/boost \
@@ -94,8 +94,7 @@ ${MXE_TARGET}-qmake-qt5 \
 	BDB_LIB_PATH=$MXE_LIB_PATH \
 	MINIUPNPC_INCLUDE_PATH=$MXE_INCLUDE_PATH \
 	MINIUPNPC_LIB_PATH=$MXE_LIB_PATH \
-	QMAKE_LRELEASE=/mnt/mxe/usr/i686-w64-mingw32.static/qt5/bin/lrelease Peepcoin-qt.pro
+	QMAKE_LRELEASE=/mnt/mxe/usr/i686-w64-mingw32.static/qt5/bin/lrelease RELEASE=1 USE_UPNP=- USE_QRCODE=1 Peepcoin-qt.pro
 	
-    $CPU_TARGET-w64-mingw32.static-qmake-qt5 RELEASE=1 USE_UPNP=- USE_QRCODE=1 Peepcoin-qt.pro
     make -j $NCPU
 fi
