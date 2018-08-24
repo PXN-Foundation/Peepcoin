@@ -9,6 +9,11 @@ sed -i 's/pthread_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/includ
 sed -i 's/pid_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/include/db.h
 sed -i 's/pid_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/include/db_cxx.h
 
+cd src/leveldb
+TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=/usr/lib/mxe/usr/bin/i686-w64-mingw32.static-gcc CXX=/usr/lib//mxe/usr/bin/i686-w64-mingw32.static-g++
+cd ..
+cd ..
+
 MXE_INCLUDE_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/include
 MXE_LIB_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/lib
 
