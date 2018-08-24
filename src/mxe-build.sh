@@ -40,11 +40,26 @@ sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 tar zxvf db-4.8.30.NC.tar.gz
 
-cp compile-db.sh db-4.8.30.NC/compile-db.sh
 cd db-4.8.30.NC
-touch compile-db.sh
-chmod ugo+x compile-db.sh
-./compile-db.sh
+MXE_PATH=/usr/lib/mxe
+sed -i "s/WinIoCtl.h/winioctl.h/g" dbinc/win_db.h
+mkdir build_mxe
+cd build_mxe
+
+CC=$MXE_PATH/usr/bin/i686-w64-mingw32.static-gcc \
+CXX=$MXE_PATH/usr/bin/i686-w64-mingw32.static-g++ \
+AR=$MXE_PATH/usr/bin/i686-w64-mingw32.static-ar \
+RANLIB=$MXE_PATH/usr/bin/i686-w64-mingw32.static-ranlib \
+CFLAGS="-DSTATICLIB -I$MXE_PATH/usr/i686-w64-mingw32.static/include" \
+../dist/configure \
+        --disable-replication \
+        --enable-mingw \
+        --enable-cxx \
+        --host x86 \
+        --prefix=$MXE_PATH/usr/i686-w64-mingw32.static
+
+make -j$(nproc)
+sudo make install
 
 sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
