@@ -37,10 +37,10 @@ sudo apt-get update
 sudo apt-get --yes install mxe-${MXE_TARGET}-cc
 sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 #sudo apt-get --yes install mxe-${MXE_TARGET}-db
-wget 'http://download.oracle.com/berkeley-db/db-5.0.32.NC.tar.gz'
-tar zxvf db-5.0.32.NC.tar.gz
+wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
+tar zxvf db-4.8.30.NC.tar.gz
 
-cd db-5.0.32.NC
+cd db-4.8.30.NC
 touch compile-db.sh
 chmod ugo+x compile-db.sh
 
