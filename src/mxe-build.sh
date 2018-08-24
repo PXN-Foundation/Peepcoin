@@ -43,6 +43,7 @@ tar zxvf db-4.8.30.NC.tar.gz
 cd db-4.8.30.NC
 touch compile-db.sh
 chmod ugo+x compile-db.sh
+./compile-db.sh
 
 sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
