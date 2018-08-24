@@ -60,8 +60,8 @@ if [ $QT_BUILD == "no" ]; then
     make -f makefile.linux-mingw -j $NCPU \
         DEPSDIR=$MXEDIR/usr/$MXE_TARGET TARGET_PLATFORM=$CPU_TARGET
 else
-	BDB_INCLUDE_PATH=/usr/lib/mxe/usr/i686-w64-mingw32.static/include
-	BDB_LIB_PATH=/usr/lib/mxe/usr/i686-w64-mingw32.static/lib
+    BDB_INCLUDE_PATH=/usr/lib/mxe/usr/i686-w64-mingw32.static/include
+    BDB_LIB_PATH=/usr/lib/mxe/usr/i686-w64-mingw32.static/lib
     sudo apt-get --yes install mxe-${MXE_TARGET}-qt5
     sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
     cd  ${TRAVIS_BUILD_DIR}
