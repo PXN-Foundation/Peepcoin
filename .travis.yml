@@ -64,5 +64,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: PXN-Foundation/Peepcoin
-    tags: true
-    branch: UI
+    tags: false
+    branch: Temp
