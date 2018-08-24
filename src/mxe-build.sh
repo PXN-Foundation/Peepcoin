@@ -68,8 +68,8 @@ NCPU=`cat /proc/cpuinfo | grep -c ^processor`
 # Some variables used by both Qt and daemon builds.
 MXEDIR=/usr/lib/mxe
 export PATH=$PATH:$MXEDIR/usr/bin
-BDB_INCLUDE_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/include
-BDB_LIB_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/lib
+MXE_INCLUDE_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/include
+MXE_LIB_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/lib
 
 # Invoke the magical commands to get Peepcoin built.
 if [ $QT_BUILD == "no" ]; then
@@ -80,6 +80,22 @@ else
     sudo apt-get --yes install mxe-${MXE_TARGET}-qt5
     sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
     cd  ${TRAVIS_BUILD_DIR}
-    $CPU_TARGET-w64-mingw32.static-qmake-qt5 RELEASE=1 USE_UPNP=- USE_QRCODE=1 BDB_INCLUDE_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/include BDB_LIB_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/lib Peepcoin-qt.pro
+
+
+
+${MXE_TARGET}-qmake-qt5 \
+	BOOST_LIB_SUFFIX=-mt \
+	BOOST_THREAD_LIB_SUFFIX=_win32-mt \
+	BOOST_INCLUDE_PATH=$MXE_INCLUDE_PATH/boost \
+	BOOST_LIB_PATH=$MXE_LIB_PATH \
+	OPENSSL_INCLUDE_PATH=$MXE_INCLUDE_PATH/openssl \
+	OPENSSL_LIB_PATH=$MXE_LIB_PATH \
+	BDB_INCLUDE_PATH=$MXE_INCLUDE_PATH \
+	BDB_LIB_PATH=$MXE_LIB_PATH \
+	MINIUPNPC_INCLUDE_PATH=$MXE_INCLUDE_PATH \
+	MINIUPNPC_LIB_PATH=$MXE_LIB_PATH \
+	QMAKE_LRELEASE=/mnt/mxe/usr/i686-w64-mingw32.static/qt5/bin/lrelease Peepcoin-qt.pro
+	
+    $CPU_TARGET-w64-mingw32.static-qmake-qt5 RELEASE=1 USE_UPNP=- USE_QRCODE=1 Peepcoin-qt.pro
     make -j $NCPU
 fi
