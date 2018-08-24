@@ -80,6 +80,6 @@ else
     sudo apt-get --yes install mxe-${MXE_TARGET}-qt5
     sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
     cd  ${TRAVIS_BUILD_DIR}
-    $CPU_TARGET-w64-mingw32.static-qmake-qt5 RELEASE=1 USE_UPNP=- USE_QRCODE=1 Peepcoin-qt.pro
+    $CPU_TARGET-w64-mingw32.static-qmake-qt5 RELEASE=1 USE_UPNP=- USE_QRCODE=1 BDB_INCLUDE_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/include BDB_LIB_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/lib Peepcoin-qt.pro
     make -j $NCPU
 fi
