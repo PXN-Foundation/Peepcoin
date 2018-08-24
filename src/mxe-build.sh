@@ -40,6 +40,7 @@ sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 tar zxvf db-4.8.30.NC.tar.gz
 
+cp compile-db.sh db-4.8.30.NC/compile-db.sh
 cd db-4.8.30.NC
 touch compile-db.sh
 chmod ugo+x compile-db.sh
