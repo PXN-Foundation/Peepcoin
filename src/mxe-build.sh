@@ -89,6 +89,7 @@ sed -i 's/pid_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/include/db
 
 MXE_INCLUDE_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/include
 MXE_LIB_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/lib
+pwd
 cd Peepcoin
 i686-w64-mingw32.static-qmake-qt5 \
         BOOST_LIB_SUFFIX=-mt \
@@ -102,7 +103,7 @@ i686-w64-mingw32.static-qmake-qt5 \
         MINIUPNPC_INCLUDE_PATH=$MXE_INCLUDE_PATH \
         MINIUPNPC_LIB_PATH=$MXE_LIB_PATH \
         QMAKE_LRELEASE=$MXE_PATH/usr/i686-w64-mingw32.static/qt5/bin/lrelease Peepcoin-qt.pro
-
+pwd
 #make clean
 make -j$(nproc) -f Makefile.Release
 #make -j$(nproc) -f Makefile
