@@ -67,9 +67,9 @@ make
 sudo make install
 
 # pthread_t and pid_t change to u_int32_t in berkeley db mxe header files
-sudo sed -i 's/pthread_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/include/db.h
-sudo sed -i 's/pid_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/include/db.h
-sudo sed -i 's/pid_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/include/db_cxx.h
+sudo sed -i 's/pthread_t/u_int32_t/g' $MXE_PATH/usr/bin/${MXE_TARGET}/include/db.h
+sudo sed -i 's/pid_t/u_int32_t/g' $MXE_PATH/usr/bin/${MXE_TARGET}/include/db.h
+sudo sed -i 's/pid_t/u_int32_t/g' $MXE_PATH/usr/bin/${MXE_TARGET}/include/db_cxx.h
 
 # Parallel build, based on our number of CPUs available.
 NCPU=`cat /proc/cpuinfo | grep -c ^processor`
@@ -89,7 +89,7 @@ cd ..
 make clean
 cd src/leveldb
 make clean
-TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=/usr/lib/mxe/usr/bin/i686-w64-mingw32.static-gcc CXX=/usr/lib/mxe/usr/bin/i686-w64-mingw32.static-g++
+TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=$MXE_PATH/usr/bin/${MXE_TARGET}-gcc CXX=$MXE_PATH/usr/bin/${MXE_TARGET}-g++
 cd ..
 cd ..
 
@@ -104,7 +104,7 @@ i686-w64-mingw32.static-qmake-qt5 \
         BDB_LIB_PATH=$MXE_LIB_PATH \
         MINIUPNPC_INCLUDE_PATH=$MXE_INCLUDE_PATH \
         MINIUPNPC_LIB_PATH=$MXE_LIB_PATH \
-        QMAKE_LRELEASE=$MXE_PATH/usr/i686-w64-mingw32.static/qt5/bin/lrelease Peepcoin-qt.pro
+        QMAKE_LRELEASE=$MXE_PATH/usr/$MXE_TARGET/qt5/bin/lrelease Peepcoin-qt.pro
 
 #make clean
 make -j$(nproc) -f Makefile.Release
