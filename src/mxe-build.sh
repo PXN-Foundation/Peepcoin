@@ -116,5 +116,6 @@ ${MXE_TARGET}-qmake-qt5 \
 
 #make clean
 make -j$(nproc) -f Makefile.Release
+mv release/peepcoin-qt.exe release/peepcoin-qt-${CPU_TARGET}.exe
 #make -j$(nproc) -f Makefile
 fi
