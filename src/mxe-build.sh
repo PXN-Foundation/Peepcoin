@@ -36,14 +36,20 @@ sudo apt-get update
 # Add the required MXE build packages and libraries.
 sudo apt-get --yes install mxe-${MXE_TARGET}-cc
 sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
+sudo apt-get --yes install mxe-${MXE_TARGET}-boost
+sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
 #sudo apt-get --yes install mxe-${MXE_TARGET}-db
+
+# Some variables used by both Qt and daemon builds.
+MXE_PATH=/usr/lib/mxe
+export PATH=$PATH:$MXE_PATH/usr/bin
+MXE_INCLUDE_PATH=$MXE_PATH/usr/${MXE_TARGET}/include
+MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET}/lib
+
 # Download, extract, build, install BDB4.8.30
 wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 tar zxvf db-4.8.30.NC.tar.gz
-
 cd db-4.8.30.NC
-MXE_PATH=/usr/lib/mxe
-sudo sed -i "s/WinIoCtl.h/winioctl.h/g" src/dbinc/win_db.h
 mkdir build_mxe
 cd build_mxe
 
@@ -60,36 +66,22 @@ make
 
 sudo make install
 
-sudo apt-get --yes install mxe-${MXE_TARGET}-boost
-sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
-
-# Parallel build, based on our number of CPUs available.
-NCPU=`cat /proc/cpuinfo | grep -c ^processor`
-
-# Some variables used by both Qt and daemon builds.
-MXEDIR=/usr/lib/mxe
-export PATH=$PATH:$MXEDIR/usr/bin
-MXE_INCLUDE_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/include
-MXE_LIB_PATH=/usr/lib/mxe/usr/${MXE_TARGET}/lib
-
-# Invoke the magical commands to get Peepcoin built.
-if [ $QT_BUILD == "no" ]; then
-    cd src
-    make -f makefile.linux-mingw -j $NCPU \
-        DEPSDIR=$MXEDIR/usr/$MXE_TARGET TARGET_PLATFORM=$CPU_TARGET
-else
-    sudo apt-get --yes install mxe-${MXE_TARGET}-qt5
-    sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
-    MXE_PATH=/usr/lib/mxe
-    export PATH=$MXE_PATH/usr/bin:$PATH
-
 # pthread_t and pid_t change to u_int32_t in berkeley db mxe header files
 sudo sed -i 's/pthread_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/include/db.h
 sudo sed -i 's/pid_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/include/db.h
 sudo sed -i 's/pid_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/include/db_cxx.h
 
-MXE_INCLUDE_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/include
-MXE_LIB_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/lib
+# Parallel build, based on our number of CPUs available.
+NCPU=`cat /proc/cpuinfo | grep -c ^processor`
+
+# Invoke the magical commands to get Peepcoin built.
+if [ $QT_BUILD == "no" ]; then
+    cd src
+    make -f makefile.linux-mingw -j $NCPU \
+        DEPSDIR=$MXE_PATH/usr/$MXE_TARGET TARGET_PLATFORM=$CPU_TARGET
+else
+    sudo apt-get --yes install mxe-${MXE_TARGET}-qt5
+    sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
 
 # cross-compile LevelDB
 cd ..
