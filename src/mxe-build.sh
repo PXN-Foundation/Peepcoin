@@ -93,7 +93,7 @@ TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=$MXE_PATH/usr/bin/${MX
 cd ..
 cd ..
 
-i686-w64-mingw32.static-qmake-qt5 \
+${MXE_TARGET}-qmake-qt5 \
         BOOST_LIB_SUFFIX=-mt \
         BOOST_THREAD_LIB_SUFFIX=_win32-mt \
         BOOST_INCLUDE_PATH=$MXE_INCLUDE_PATH/boost \
