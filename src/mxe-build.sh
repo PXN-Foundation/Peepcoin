@@ -91,7 +91,12 @@ MXE_INCLUDE_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/include
 MXE_LIB_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/lib
 
 cd ..
+pwd
+cd src/leveldb
+TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=/usr/lib/mxe/usr/bin/i686-w64-mingw32.static-gcc CXX=/usr/lib//mxe/usr/bin/i686-w64-mingw32.static-g++
 cd ..
+cd ..
+pwd
 
 i686-w64-mingw32.static-qmake-qt5 \
         BOOST_LIB_SUFFIX=-mt \
