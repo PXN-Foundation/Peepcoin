@@ -40,8 +40,6 @@ install:
 script:
 - make
 - if [[ $TRAVIS_OS_NAME == linux ]]; then 
-     #bash src/mxe-build.sh windows32-qt;
-     #bash src/mxe-build.sh windows64-qt;
      bash scripts/windows-crosscompile/compile-peepcoin.sh windows32-qt;
      bash scripts/windows-crosscompile/compile-peepcoin.sh windows64-qt;
   fi
