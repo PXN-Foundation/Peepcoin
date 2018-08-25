@@ -94,6 +94,7 @@ MXE_LIB_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/lib
 # cross-compile LevelDB
 cd ..
 cd ..
+make clean
 cd src/leveldb
 make clean
 TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=/usr/lib/mxe/usr/bin/i686-w64-mingw32.static-gcc CXX=/usr/lib//mxe/usr/bin/i686-w64-mingw32.static-g++
