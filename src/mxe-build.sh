@@ -37,12 +37,13 @@ sudo apt-get update
 sudo apt-get --yes install mxe-${MXE_TARGET}-cc
 sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 #sudo apt-get --yes install mxe-${MXE_TARGET}-db
+# Download, extract, build, install BDB4.8.30
 wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 tar zxvf db-4.8.30.NC.tar.gz
 
 cd db-4.8.30.NC
 MXE_PATH=/usr/lib/mxe
-sed -i "s/WinIoCtl.h/winioctl.h/g" src/dbinc/win_db.h
+sudo sed -i "s/WinIoCtl.h/winioctl.h/g" src/dbinc/win_db.h
 mkdir build_mxe
 cd build_mxe
 
@@ -90,13 +91,14 @@ sudo sed -i 's/pid_t/u_int32_t/g' /usr/lib/mxe/usr/i686-w64-mingw32.static/inclu
 MXE_INCLUDE_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/include
 MXE_LIB_PATH=$MXE_PATH/usr/i686-w64-mingw32.static/lib
 
+# cross-compile LevelDB
 cd ..
-pwd
+cd ..
 cd src/leveldb
+make clean
 TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=/usr/lib/mxe/usr/bin/i686-w64-mingw32.static-gcc CXX=/usr/lib//mxe/usr/bin/i686-w64-mingw32.static-g++
 cd ..
 cd ..
-pwd
 
 i686-w64-mingw32.static-qmake-qt5 \
         BOOST_LIB_SUFFIX=-mt \
