@@ -63,6 +63,7 @@ deploy:
   file: 
       - Peepcoin-Qt.dmg
       - peepcoin-qt.tar.gz
+      - release/peepcoin-qt.exe
   skip_cleanup: true
   on:
     repo: PXN-Foundation/Peepcoin
