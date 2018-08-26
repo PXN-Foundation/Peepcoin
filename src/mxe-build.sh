@@ -15,7 +15,7 @@ elif [ $1 == "windows32-qt" ]; then
     CPU_TARGET="i686"
     QT_BUILD="yes"
 elif [ $1 == "windows64-qt" ]; then
-    MXE_TARGET="x86-64-w64-mingw32.static"
+    MXE_TARGET="x86_64-w64-mingw32.static"
     CPU_TARGET="x86_64"
     QT_BUILD="yes"
 else
