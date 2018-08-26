@@ -64,7 +64,7 @@ CXX=$MXE_PATH/usr/bin/${MXE_TARGET}-g++ \
     --disable-replication \
     --enable-mingw \
     --enable-cxx \
-    --host ${HOST} \
+    --host=${HOST} \
     --prefix=$MXE_PATH/usr/${MXE_TARGET}
 
 make
