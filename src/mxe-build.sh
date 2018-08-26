@@ -8,7 +8,7 @@ if [ $1 == "windows32" ]; then
     QT_BUILD="no"
     HOST="x86"
 elif [ $1 == "windows64" ]; then
-    MXE_TARGET="x86-64-w64-mingw32.static"
+    MXE_TARGET="x86_64-w64-mingw32.static"
     CPU_TARGET="x86_64"
     QT_BUILD="no"
     HOST="x86_64"
