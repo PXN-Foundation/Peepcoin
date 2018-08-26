@@ -11,7 +11,7 @@ elif [ $1 == "windows64" ]; then
     MXE_TARGET="x86-64-w64-mingw32.static"
     CPU_TARGET="x86_64"
     QT_BUILD="no"
-    HOST="x64"
+    HOST="x86-64"
 elif [ $1 == "windows32-qt" ]; then
     MXE_TARGET="i686-w64-mingw32.static"
     CPU_TARGET="i686"
@@ -21,7 +21,7 @@ elif [ $1 == "windows64-qt" ]; then
     MXE_TARGET="x86_64-w64-mingw32.static"
     CPU_TARGET="x86_64"
     QT_BUILD="yes"
-    HOST="x64"
+    HOST="x86-64"
 else
     echo "Syntax: $0 [ windows32 | windows64 | windows32-qt | windows64-qt ]">&2
     exit 1
