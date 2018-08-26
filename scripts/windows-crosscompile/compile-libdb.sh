@@ -14,7 +14,7 @@ CFLAGS="-DSTATICLIB -I$MXE_PATH/usr/x86_64-w64-mingw32.static/include" \
         --disable-replication \
         --enable-mingw \
         --enable-cxx \
-        --host x86 \
+        --host x64 \
         --prefix=$MXE_PATH/usr/x86_64-w64-mingw32.static
 
 make -j$(nproc)
