@@ -8,7 +8,7 @@ cd build_mxe
 CC=$MXE_PATH/usr/bin/x86_64-w64-mingw32.static-gcc \
 CXX=$MXE_PATH/usr/bin/x86_64-w64-mingw32.static-g++ \
 AR=$MXE_PATH/usr/bin/x86_64-w64-mingw32.static-ar \
-RANLIB=$MXE_PATH/usr/bin/x86_64-w64-mingw32-ranlib \
+RANLIB=$MXE_PATH/usr/bin/x86_64-w64-mingw32.static-ranlib \
 CFLAGS="-DSTATICLIB -I$MXE_PATH/usr/x86_64-w64-mingw32.static/include" \
 ../dist/configure \
         --disable-replication \
