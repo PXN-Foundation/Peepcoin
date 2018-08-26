@@ -32,7 +32,7 @@ export PATH=$MXE_PATH/usr/bin:$PATH
 # sed -i 's/pid_t/u_int32_t/g' /usr/lib/mxe/usr/${MXE_TARGET}/include/db_cxx.h
 
 cd src/leveldb
-TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=/usr/lib/mxe/usr/bin/${MXE_TARGET}-gcc CXX=/usr/lib//mxe/usr/bin/${MXE_TARGET}-g++
+TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=/usr/lib/mxe/usr/bin/${MXE_TARGET}-gcc CXX=/usr/lib/mxe/usr/bin/${MXE_TARGET}-g++
 cd ..
 cd ..
 
