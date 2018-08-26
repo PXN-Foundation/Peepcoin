@@ -54,9 +54,9 @@ MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET}/lib
 wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 tar zxvf db-4.8.30.NC.tar.gz
 cd db-4.8.30.NC
+make clean
 mkdir build_mxe
 cd build_mxe
-make clean
 
 CC=$MXE_PATH/usr/bin/${MXE_TARGET}-gcc \
 CXX=$MXE_PATH/usr/bin/${MXE_TARGET}-g++ \
@@ -64,7 +64,6 @@ CXX=$MXE_PATH/usr/bin/${MXE_TARGET}-g++ \
     --disable-replication \
     --enable-mingw \
     --enable-cxx \
-    --build=${MXE_TARGET}
     --host ${HOST} \
     --prefix=$MXE_PATH/usr/${MXE_TARGET}
 
