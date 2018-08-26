@@ -54,6 +54,7 @@ MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET}/lib
 wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 tar zxvf db-4.8.30.NC.tar.gz
 cd db-4.8.30.NC
+make clean
 mkdir build_mxe
 cd build_mxe
 
