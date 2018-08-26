@@ -21,9 +21,9 @@ sudo apt-get install -yqq mxe-x86-64-w64-mingw32.static-boost mxe-x86-64-w64-min
 sudo apt-get install -yqq libgtk2.0-dev
 
 #install mxe
-pushd /opt
-test -e "/opt/mxe" || sudo chown -R `whoami` /opt
-test -e "/opt/mxe" || git clone https://github.com/mxe/mxe.git
+pushd /usr/lib
+test -e "/usr/lib/mxe" || sudo chown -R `whoami` /opt
+test -e "/usr/lib/mxe" || git clone https://github.com/mxe/mxe.git
 popd
 
 #compile boost
@@ -36,16 +36,16 @@ popd
 
 #miniupnpc
 wget -O miniupnpc-1.9.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.tar.gz
-tar -xf miniupnpc-1.9.tar.gz -C /opt/mxe
-pushd /opt/mxe/miniupnpc-1.9
+tar -xf miniupnpc-1.9.tar.gz -C /usr/lib/mxe
+pushd /usr/lib/mxe/miniupnpc-1.9
 ${OLDPWD}/compile-miniupnpc.sh 
 popd
 
 
 #libdb
 wget http://download.oracle.com/berkeley-db/db-4.8.30.tar.gz
-tar -xf db-4.8.30.tar.gz -C /opt/mxe
-pushd /opt/mxe/db-4.8.30
+tar -xf db-4.8.30.tar.gz -C /usr/lib/mxe
+pushd /usr/lib/mxe/db-4.8.30
 ${OLDPWD}/compile-libdb.sh
 popd
 
