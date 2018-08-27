@@ -59,6 +59,7 @@ MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
 #TRAVIS_BUILD_DIR=~/Peepcoin
 
 # Download, extract, build, install BDB4.8.30
+cd ${TRAVIS_BUILD_DIR}
 wget -N 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 tar zxf db-4.8.30.NC.tar.gz
 cd db-4.8.30.NC
@@ -83,6 +84,28 @@ sudo make install
 sudo sed -i 's/pthread_t/u_int32_t/g' $MXE_INCLUDE_PATH/db.h
 sudo sed -i 's/pid_t/u_int32_t/g' $MXE_INCLUDE_PATH/db.h
 sudo sed -i 's/pid_t/u_int32_t/g' $MXE_INCLUDE_PATH/db_cxx.h
+
+# Download, extract, build, LibPNG 1.6.16 (required for QREncode)
+cd ${TRAVIS_BUILD_DIR}
+wget -N 'http://download.sourceforge.net/libpng/libpng-1.6.16.tar.gz'
+tar xzf libpng-1.6.16.tar.gz
+cd libpng-1.6.16
+CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
+CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
+./configure \
+    --disable-shared \
+    --host=${HOST} \
+    --prefix=$MXE_PATH/usr/${MXE_TARGET1}
+
+make
+cp .libs/libpng16.a .libs/libpng.a
+
+# Download, extract, build QREncode (not finished)
+cd ${TRAVIS_BUILD_DIR}
+wget -N 'http://fukuchi.org/works/qrencode/qrencode-4.0.2.tar.gz'
+tar xzf qrencode-4.0.2.tar.gz
+#cd qrencode-4.0.2
+# need to figure out configure
 
 # Parallel build, based on our number of CPUs available.
 NCPU=`cat /proc/cpuinfo | grep -c ^processor`
