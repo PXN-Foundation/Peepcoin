@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -x
+
 # Set our MXE and CPU information based on what type of
 # wallet we want, and for which type of Windows.
 if [ $1 == "windows32" ]; then
