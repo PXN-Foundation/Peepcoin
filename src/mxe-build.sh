@@ -123,7 +123,7 @@ if [ $QT_BUILD == "no" ]; then
     make -f makefile.linux-mingw -j $NCPU \
         DEPSDIR=$MXE_PATH/usr/$MXE_TARGET TARGET_PLATFORM=$CPU_TARGET
 else
-    sudo apt-get --yes install mxe-${MXE_TARGET}-qt5
+    #sudo apt-get --yes install mxe-${MXE_TARGET}-qt5
     sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
 
 # clean Peepcoin directory before building leveldb because it will clean leveldb as well
