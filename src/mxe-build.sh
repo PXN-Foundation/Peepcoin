@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 set -x
 
@@ -6,21 +6,25 @@ set -x
 # wallet we want, and for which type of Windows.
 if [ $1 == "windows32" ]; then
     MXE_TARGET="i686-w64-mingw32.static"
+    MXE_TARGET1="i686-w64-mingw32.static"
     CPU_TARGET="i686"
     QT_BUILD="no"
     HOST="x86"
 elif [ $1 == "windows64" ]; then
-    MXE_TARGET="x86_64-w64-mingw32.static"
+    MXE_TARGET="x86-64-w64-mingw32.static"
+    MXE_TARGET1="x86_64-w64-mingw32.static"
     CPU_TARGET="x86_64"
     QT_BUILD="no"
     HOST="x86_64"
 elif [ $1 == "windows32-qt" ]; then
     MXE_TARGET="i686-w64-mingw32.static"
+    MXE_TARGET1="i686-w64-mingw32.static"
     CPU_TARGET="i686"
     QT_BUILD="yes"
     HOST="x86"
 elif [ $1 == "windows64-qt" ]; then
-    MXE_TARGET="x86_64-w64-mingw32.static"
+    MXE_TARGET="x86-64-w64-mingw32.static"
+    MXE_TARGET1="x86_64-w64-mingw32.static"
     CPU_TARGET="x86_64"
     QT_BUILD="yes"
     HOST="x86_64"
@@ -44,30 +48,32 @@ sudo apt-get --yes install mxe-${MXE_TARGET}-cc
 sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
+sudo apt-get --yes -f install
 #sudo apt-get --yes install mxe-${MXE_TARGET}-db
 
 # Some variables used by both Qt and daemon builds.
 MXE_PATH=/usr/lib/mxe
 export PATH=$PATH:$MXE_PATH/usr/bin
-MXE_INCLUDE_PATH=$MXE_PATH/usr/${MXE_TARGET}/include
-MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET}/lib
+MXE_INCLUDE_PATH=$MXE_PATH/usr/${MXE_TARGET1}/include
+MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
+#TRAVIS_BUILD_DIR=~/Peepcoin
 
 # Download, extract, build, install BDB4.8.30
-wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
+wget -N 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 tar zxf db-4.8.30.NC.tar.gz
 cd db-4.8.30.NC
 make clean
 mkdir build_mxe
 cd build_mxe
 
-CC=$MXE_PATH/usr/bin/${MXE_TARGET}-gcc \
-CXX=$MXE_PATH/usr/bin/${MXE_TARGET}-g++ \
+CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
+CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
 ../dist/configure \
     --disable-replication \
     --enable-mingw \
     --enable-cxx \
     --host=${HOST} \
-    --prefix=$MXE_PATH/usr/${MXE_TARGET}
+    --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 
 make
 
@@ -99,11 +105,11 @@ cd ${TRAVIS_BUILD_DIR}
 cd src/leveldb
 chmod +x build_detect_platform
 make clean
-TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=$MXE_PATH/usr/bin/${MXE_TARGET}-gcc CXX=$MXE_PATH/usr/bin/${MXE_TARGET}-g++
+TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++
 
 cd ${TRAVIS_BUILD_DIR}
 
-${MXE_TARGET}-qmake-qt5 \
+${MXE_TARGET1}-qmake-qt5 \
         BOOST_LIB_SUFFIX=-mt \
         BOOST_THREAD_LIB_SUFFIX=_win32-mt \
         BOOST_INCLUDE_PATH=$MXE_INCLUDE_PATH/boost \
@@ -114,10 +120,11 @@ ${MXE_TARGET}-qmake-qt5 \
         BDB_LIB_PATH=$MXE_LIB_PATH \
         MINIUPNPC_INCLUDE_PATH=$MXE_INCLUDE_PATH \
         MINIUPNPC_LIB_PATH=$MXE_LIB_PATH \
-        QMAKE_LRELEASE=$MXE_PATH/usr/$MXE_TARGET/qt5/bin/lrelease Peepcoin-qt.pro
+        QMAKE_LRELEASE=$MXE_PATH/usr/$MXE_TARGET1/qt5/bin/lrelease Peepcoin-qt.pro
 
 #make clean
 make -j$(nproc) -f Makefile.Release
 mv release/peepcoin-qt.exe release/peepcoin-qt-${CPU_TARGET}.exe
 #make -j$(nproc) -f Makefile
 fi
+
