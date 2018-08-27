@@ -54,7 +54,7 @@ MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET}/lib
 
 # Download, extract, build, install BDB4.8.30
 wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
-tar zxvf db-4.8.30.NC.tar.gz
+tar zxf db-4.8.30.NC.tar.gz
 cd db-4.8.30.NC
 make clean
 mkdir build_mxe
