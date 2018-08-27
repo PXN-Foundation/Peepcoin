@@ -90,6 +90,7 @@ cd ${TRAVIS_BUILD_DIR}
 wget -N 'http://download.sourceforge.net/libpng/libpng-1.6.16.tar.gz'
 tar xzf libpng-1.6.16.tar.gz
 cd libpng-1.6.16
+make clean
 CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
 CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
 ./configure \
@@ -104,14 +105,20 @@ cp .libs/libpng16.a .libs/libpng.a
 cd ${TRAVIS_BUILD_DIR}
 wget -N 'http://fukuchi.org/works/qrencode/qrencode-4.0.2.tar.gz'
 tar xzf qrencode-4.0.2.tar.gz
-#cd qrencode-4.0.2
-# need to figure out configure
+cd qrencode-4.0.2
+make clean
+LIBS="../libpng-1.6.16/.libs/libpng.a ../../mingw32/${MXE_TARGET1}/lib/libz.a" \
+png_CFLAGS="-I../libpng-1.6.16" \
+png_LIBS="-L../libpng-1.6.16/.libs" \
+./configure --enable-static --disable-shared --without-tools
+make
 
 # Parallel build, based on our number of CPUs available.
 NCPU=`cat /proc/cpuinfo | grep -c ^processor`
 
 # Invoke the magical commands to get Peepcoin built.
 if [ $QT_BUILD == "no" ]; then
+    cd ${TRAVIS_BUILD_DIR}
     cd src
     make -f makefile.linux-mingw -j $NCPU \
         DEPSDIR=$MXE_PATH/usr/$MXE_TARGET TARGET_PLATFORM=$CPU_TARGET
