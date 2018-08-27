@@ -48,37 +48,36 @@ sudo apt-get --yes install mxe-${MXE_TARGET}-cc
 sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
-sudo apt-get --yes install mxe-${MXE_TARGET}-db
 sudo apt-get --yes -f install
-
+#sudo apt-get --yes install mxe-${MXE_TARGET}-db
 
 # Some variables used by both Qt and daemon builds.
-# MXE_PATH=/usr/lib/mxe
-# export PATH=$PATH:$MXE_PATH/usr/bin
-# MXE_INCLUDE_PATH=$MXE_PATH/usr/${MXE_TARGET1}/include
-# MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
+MXE_PATH=/usr/lib/mxe
+export PATH=$PATH:$MXE_PATH/usr/bin
+MXE_INCLUDE_PATH=$MXE_PATH/usr/${MXE_TARGET1}/include
+MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
 #TRAVIS_BUILD_DIR=~/Peepcoin
 
 # Download, extract, build, install BDB4.8.30
-# wget -N 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
-# tar zxf db-4.8.30.NC.tar.gz
-# cd db-4.8.30.NC
-# make clean
-# mkdir build_mxe
-# cd build_mxe
+wget -N 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
+tar zxf db-4.8.30.NC.tar.gz
+cd db-4.8.30.NC
+mkdir build_mxe
+cd build_mxe
+make clean
 
-# CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
-# CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
-# ../dist/configure \
-#     --disable-replication \
-#     --enable-mingw \
-#     --enable-cxx \
-#     --host=${HOST} \
-#     --prefix=$MXE_PATH/usr/${MXE_TARGET1}
+CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
+CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
+../dist/configure \
+    --disable-replication \
+    --enable-mingw \
+    --enable-cxx \
+    --host=${HOST} \
+    --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 
-# make
+make
 
-# sudo make install
+sudo make install
 
 # pthread_t and pid_t change to u_int32_t in berkeley db mxe header files
 sudo sed -i 's/pthread_t/u_int32_t/g' $MXE_INCLUDE_PATH/db.h
