@@ -106,12 +106,12 @@ cd ${TRAVIS_BUILD_DIR}
 wget -N 'http://fukuchi.org/works/qrencode/qrencode-4.0.2.tar.gz'
 tar xzf qrencode-4.0.2.tar.gz
 cd qrencode-4.0.2
-make clean
-LIBS="../libpng-1.6.16/.libs/libpng.a ../../mingw32/${MXE_TARGET1}/lib/libz.a" \
-png_CFLAGS="-I../libpng-1.6.16" \
-png_LIBS="-L../libpng-1.6.16/.libs" \
-./configure --enable-static --disable-shared --without-tools
-make
+#make clean
+#LIBS="../libpng-1.6.16/.libs/libpng.a ../../mingw32/${MXE_TARGET1}/lib/libz.a" \
+#png_CFLAGS="-I../libpng-1.6.16" \
+#png_LIBS="-L../libpng-1.6.16/.libs" \
+#./configure --enable-static --disable-shared --without-tools
+#make
 
 # Parallel build, based on our number of CPUs available.
 NCPU=`cat /proc/cpuinfo | grep -c ^processor`
