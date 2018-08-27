@@ -128,7 +128,7 @@ cd ${TRAVIS_BUILD_DIR}
 cd src/leveldb
 chmod +x build_detect_platform
 make clean
-TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++
+TARGET_OS=OS_WINDOWS_CROSSCOMPILE make libleveldb.a libmemenv.a CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++
 
 cd ${TRAVIS_BUILD_DIR}
 
