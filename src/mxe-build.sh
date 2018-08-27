@@ -89,16 +89,17 @@ else
     sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
 
 # clean Peepcoin directory before building leveldb because it will clean leveldb as well
-cd ~/Peepcoin
+cd ${TRAVIS_BUILD_DIR}
 make clean
 
 # cross-compile LevelDB
-cd ~/Peepcoin/src/leveldb
+cd ${TRAVIS_BUILD_DIR}
+cd src/leveldb
 chmod +x build_detect_platform
 make clean
 TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a CC=$MXE_PATH/usr/bin/${MXE_TARGET}-gcc CXX=$MXE_PATH/usr/bin/${MXE_TARGET}-g++
 
-cd ~/Peepcoin
+cd ${TRAVIS_BUILD_DIR}
 
 ${MXE_TARGET}-qmake-qt5 \
         BOOST_LIB_SUFFIX=-mt \
