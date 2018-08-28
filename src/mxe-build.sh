@@ -71,7 +71,7 @@ CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
 CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
 AR=$MXE_PATH/usr/bin/${MXE_TARGET1}-ar \
 RANLIB=$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib \
-CFLAGS="-DSTATICLIB -I$MXE_PATH/usr/bin/${MXE_TARGET1}/include" \
+CFLAGS="-DSTATICLIB -DDLL_EXPORT -DPIC -I$MXE_PATH/usr/bin/${MXE_TARGET1}/include" \
 ../dist/configure \
     --disable-replication \
     --disable-shared \
