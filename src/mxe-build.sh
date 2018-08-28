@@ -74,6 +74,7 @@ RANLIB=$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib \
 CFLAGS="-DSTATICLIB -I$MXE_PATH/usr/bin/${MXE_TARGET1}/include" \
 ../dist/configure \
     --disable-replication \
+    --disable-shared \
     --enable-mingw \
     --enable-cxx \
     --host=${HOST} \
@@ -113,7 +114,14 @@ cd qrencode-4.0.2
 #LIBS="../libpng-1.6.16/.libs/libpng.a ../../mingw32/${MXE_TARGET1}/lib/libz.a" \
 #png_CFLAGS="-I../libpng-1.6.16" \
 #png_LIBS="-L../libpng-1.6.16/.libs" \
-#./configure --enable-static --disable-shared --without-tools
+#CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
+#CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
+#./configure \
+#    --enable-static \
+#    --disable-shared \
+#    --without-tools \
+#    --host=${HOST} \
+#    --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 #make
 
 # Parallel build, based on our number of CPUs available.
