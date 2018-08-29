@@ -39,9 +39,13 @@ install:
 
 script:
 - make
-
+- if [[ $TRAVIS_OS_NAME == linux ]]; then 
+     bash src/mxe-build.sh windows32-qt;
+     bash src/mxe-build.sh windows64-qt;
+  fi
 before_deploy:
 - if [[ $TRAVIS_OS_NAME == linux ]]; then 
+  strip peepcoin-qt;
   tar -czvf peepcoin-qt.tar.gz peepcoin-qt;
   fi
 - if [[ $TRAVIS_OS_NAME == osx ]]; then 
@@ -57,12 +61,14 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: IXbLpxVraNMa1NDrKcJbiCVzarlVZkxOWnyOe3XAbqDtDF/V5I3+ljRduH5c4XbqI69G670H5zIiM1Hs/0NFAiMBj2Ptqg/vuJ/Ar4w3COPfv6LMZqiQDdxw3cCFxH79e/yxsW3DFbahB6hTFJ/iFGzAzPrUB7/xb+z7dS9NUCHmQYlt5g70zS0+WkJRYd+yGZz+OgGmcHTnFC2PuHoBei1iXAQLdi1Y90Ka56mo9SMinEd1fXfSYXjo9abfQVGP2fg5UBeUVmW9M8tyXZ0tGyzAxe4GP71bOdPMGPJ34N8OBtoNZzfGT7jumC+dfG1Dh9VHjpXXuKj7jxVWnQQfSXX5N799fWy8mOmKdI7kH3mAw4lJhecmxehFXefHBkLc7Xte34K+Xa6Och60CxX2O2jjVJhxGtcXLBPy+eW9tiz1WXgAgaY04vlzawcO5n/7eejIUP8k9a0wq13r2pO6up/Pe/wHrKAh8khkqPFmhRDDKK25H0+/jvmc7eZkl6VY4HuM/NKRqvL+nOrif5+UtuMQFWL9FV/kbJcQ/YVHyzHkJTfnRYfwdpiw7I4Kd+xiNS2QMu8RbX6RCnc5Tk1LrcR6AWeU83GsAEA3R/VsttZyKLT6K6R6cvnSYaVo4t/o/NTjVlgP+q+jUE7Ln/+glnsNtHsablbBNnivNYAL+Vo=
+    secure: bH32eYUAT4URcrRZ32boAbLYQ7U9WC2Fh2CDZt57UFFcHPugx0dX5QOdKPJe6tQwIsofOwsRjwrcKypyhALAFRVhxUzsfK+I8y+6+H7GR5rBMD2wA85L67TAIFmmRYnGvjuusRrW2xZLIlyN9k0mHnG+uy2QnnKW/Do5myPxhMbEb9Il7q1eF9YwGprXxd7y/qAXRxDMAqpDIMewviQLU4FONFS7bUzHvgY7wWpTxLK5FCGIsK6SHlc68f1BYRSOdEkVUi6nZ9+8jdrGsmvc55+qritT6qS1GoHSGINJHUb+GdXmxfhAA1TXHSgy84OWHDUnnTCre62VBlA00ZvF4Aih/rQVwfPWzUrO27AjRpJh49lah9FzVwnAoRYr/UyOKDcHXQA6WzzX4BplP4Ymt5art0wEE3e6YpJ3B7JOtOKLJw5WDlIdpBCO16Z3vV8F+Yq5CDhPlJ7Z+FMW/7fmQDWp22RjDGMg7gxwPOV8G6wSgu1Ft4fINIgIblEpiZV1jE19QqwHR0ZinRs1gcXu/UcZmUZL+yvoRJZMRWqBEtguzSoBRE4reo960otSUP2pJaYptAzoPeW1R+cHk4Aoxwb3qBj4vHMOLQFXllC8qvt+4zx9fCO7tX44u7qo56sKej0U3p64FN2F6rp7o+yWZtlZbZaL7shnW4gWoXpEqhE=
   file: 
-      - "Peepcoin-Qt.dmg"
-      - "peepcoin-qt.tar.gz"
+      - Peepcoin-Qt.dmg
+      - peepcoin-qt.tar.gz
+      - release/peepcoin-qt-i686.exe
+      - release/peepcoin-qt-x86_64.exe
   skip_cleanup: true
   on:
     repo: PXN-Foundation/Peepcoin
     tags: true
-    branch: UI
+    branch: Temp
