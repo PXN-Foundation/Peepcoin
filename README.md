@@ -1,4 +1,4 @@
-Peepcoin v1.0.4.0 Alpha
+Peepcoin v1.0.4.0
 
 # Intro
 -----
