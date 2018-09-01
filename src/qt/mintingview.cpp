@@ -83,6 +83,15 @@ MintingView::MintingView(QWidget *parent) :
     hlayout->addWidget(mintingLabel);
     hlayout->addWidget(mintingLabel2);
     hlayout->addWidget(mintingCombo);
+    QHBoxLayout *hlayout2 = new QHBoxLayout();
+    hlayout2->setContentsMargins(0,0,0,0);
+
+    addressWidget = new QLineEdit(this);
+#if QT_VERSION >= 0x040700
+    /* Do not move this to the XML file, Qt before 4.7 will choke on it */
+    addressWidget->setPlaceholderText(tr("Enter address or label to search"));
+#endif
+    hlayout2->addWidget(addressWidget);
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(0,0,0,0);
@@ -90,6 +99,7 @@ MintingView::MintingView(QWidget *parent) :
 
     QTableView *view = new QTableView(this);
     vlayout->addLayout(hlayout);
+	vlayout->addLayout(hlayout2);
     vlayout->addWidget(view);
     vlayout->addLayout(legendLayout);
 
@@ -110,7 +120,7 @@ MintingView::MintingView(QWidget *parent) :
 
     connect(mintingCombo, SIGNAL(activated(int)), this, SLOT(chooseMintingInterval(int)));
 
-    // Actions
+    // Actions	
     QAction *copyTxIDAction = new QAction(tr("Copy transaction ID of input"), this);
     QAction *copyAddressAction = new QAction(tr("Copy address of input"), this);
     QAction *showHideAddressAction = new QAction(tr("Show/hide 'Address' column"), this);
@@ -122,6 +132,7 @@ MintingView::MintingView(QWidget *parent) :
     contextMenu->addAction(showHideAddressAction);
     contextMenu->addAction(showHideTxIDAction);
 
+	connect(addressWidget, SIGNAL(textChanged(QString)), this, SLOT(changedPrefix(QString)));
     connect(copyAddressAction, SIGNAL(triggered()), this, SLOT(copyAddress()));
     connect(copyTxIDAction, SIGNAL(triggered()), this, SLOT(copyTxID()));
     connect(showHideAddressAction, SIGNAL(triggered()), this, SLOT(showHideAddress()));
@@ -266,4 +277,11 @@ void MintingView::contextualMenu(const QPoint &point)
     {
         contextMenu->exec(QCursor::pos());
     }
+}
+
+void MintingView::changedPrefix(const QString &prefix)
+{
+    if(!mintingProxyModel)
+        return;
+    mintingProxyModel->setAddressPrefix(prefix);
 }

@@ -185,3 +185,4 @@ build/moc_blockbrowser.o
 build/moc_mintingfilterproxy.o
 build/moc_mintingtablemodel.o
 build/moc_mintingview.o
+build/moc_predefs.h

@@ -16,6 +16,8 @@
 #include "uint256.h"
 
 extern bool fTestNet;
+extern bool fStakeEnabled;
+extern bool fCombineEnabled;
 static inline unsigned short GetDefaultPort(const bool testnet = fTestNet)
 {
     return testnet ? 18193 : 8193;

@@ -58,7 +58,9 @@ Value getmininginfo(const Array& params, bool fHelp)
     else
       obj.push_back(Pair("stakemindepth", (int)nStakeMinDepth));
     obj.push_back(Pair("stakeminvalue", ValueFromAmount(nStakeMinValue)));
+	obj.push_back(Pair("enablestakecombine",       fCombineEnabled));
     obj.push_back(Pair("stakecombine",  ValueFromAmount(nCombineThreshold)));
+	obj.push_back(Pair("enablestakesplit",       fSplitEnabled));
     obj.push_back(Pair("stakesplit",    ValueFromAmount(nSplitThreshold)));
     obj.push_back(Pair("stakeinterest",    (uint64_t)COIN_YEAR_REWARD));
     obj.push_back(Pair("testnet",       fTestNet));

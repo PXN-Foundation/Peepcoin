@@ -19,9 +19,9 @@ png_LIBS="-L../libpng-1.6.16/.libs"
 
 cd ..
 
-wget http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
-tar xvzf qrencode-3.4.4.tar.gz
-cd qrencode-3.4.4
+wget http://fukuchi.org/works/qrencode/qrencode-4.0.2.tar.gz
+tar xvzf qrencode-4.0.2.tar.gz
+cd qrencode-4.0.2
 ./configure --enable-static --disable-shared --without-tools
 make
 sudo make install

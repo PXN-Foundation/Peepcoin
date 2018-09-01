@@ -141,12 +141,14 @@ inline void MilliSleep(int64_t n)
 
 
 // Variables for stake combination feature based on Trezarcoin-Project
-static const int64_t MIN_STAKE_AMOUNT = 200 * COIN;
+static const int64_t MIN_STAKE_AMOUNT = 1 * COIN;
 
 // implemented in wallet.cpp
 extern int64_t nStakeMinValue;
 extern int64_t nCombineThreshold;
+extern bool fCombineEnabled;
 extern int64_t nSplitThreshold;
+extern bool fSplitEnabled;
 
 extern uint32_t nStakeMinTime;
 extern uint32_t nStakeMinDepth;

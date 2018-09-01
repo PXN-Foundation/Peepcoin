@@ -27,14 +27,22 @@ namespace Checkpoints
     //
     static MapCheckpoints mapCheckpoints =
         boost::assign::map_list_of
-        ( 0,      hashGenesisBlock )
+        ( 0,       hashGenesisBlock )
+        ( 1000,    uint256("0x00000000b7e43fbcde5c40335a8c710dbc15ec0be3bef653a5f497602480ca0c"))
+        ( 50000,   uint256("0xcf8ecf6ecdbfe208124a71f8e24605a3dbe47f52af2945b21a9880d5155a12b7"))
+        ( 149822,  uint256("0xe12e1fae591324f526c95c1fb75e5bfbf62da35c93e0fbebf552bccabc2e3f45"))
+        ( 251266,  uint256("0x0e84e4df3b4d0b2b3c2116ff12c26ba67fee054f85d9629c4b52a62b3b112b8c"))
+        ( 390221,  uint256("0x2e337a44489c190cdf9ea509d7796bf5bde4000eb5badf67e08b94013cd9ab77"))
+        ( 500001,  uint256("0xa51d2494b50a2401c8cf33169a750fbd3cf77604da130daa0830abff634856f2"))
+        ( 896207,  uint256("0x9c329d4ec10a8f35dea55a31ad3a5e28c272ecbc2de3575e67a95d2c32dc7d53"))
+        ( 1000000, uint256("0x2c3ab186e34253d3447247985aeff1282856dba1b818b446dfc40123a404537c"))
+        ( 1120535, uint256("0x2fb31e250c23e68cc42e69c826ff87737a9add0f39b3d91dc2fa0f5b311e212d"))  // DAPScoin snapshot point (27-Jun-2018 02:00:38 UTC+0)
     ;
 
     // TestNet has no checkpoints
     static MapCheckpoints mapCheckpointsTestnet =
         boost::assign::map_list_of
         ( 0, hashGenesisBlockTestNet )
-        (3, uint256("0x000001176e5a699c249fb22f3bcfa2efa714667ed3768b8662d7e9d72149647e"))
 	;
 
     bool CheckHardened(int nHeight, const uint256& hash)
