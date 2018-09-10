@@ -27,14 +27,14 @@ BOOST_INCLUDE_PATH=C:/deps/boost_1_64_0
 BOOST_LIB_PATH=C:/deps/boost_1_64_0/stage/lib
 BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
 BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
-OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.2n/include
-OPENSSL_LIB_PATH=C:/deps/openssl-1.0.2n
 MINIUPNPC_INCLUDE_PATH=C:/deps/
 MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
 LIBPNG_INCLUDE_PATH=C:/deps/libpng-1.6.16
 LIBPNG_LIB_PATH=C:/deps/libpng-1.6.16/.libs
-QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.4
-QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
+QRENCODE_INCLUDE_PATH=C:/deps/qrencode-4.0.2
+QRENCODE_LIB_PATH=C:/deps/qrencode-4.0.2/.libs
+#OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.2n/include
+#OPENSSL_LIB_PATH=C:/deps/openssl-1.0.2n
 } 
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
