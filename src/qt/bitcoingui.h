@@ -116,7 +116,6 @@ private:
 	QAction *bleuETHAction;
 	QAction *bleuUSDTAction;
 	QAction *tradeOgreAction;
-	QAction *cryptoHubAction;
 	QAction *cpatexBTCAction;
 	QAction *cpatexDOGEAction;
 	QAction *otherExchangesAction;
@@ -212,7 +211,6 @@ private slots:
 	void bleuETHClicked();
 	void bleuUSDTClicked();
 	void tradeOgreClicked();
-	void cryptoHubClicked();
 	void cpatexBTCClicked();
 	void cpatexDOGEClicked();
 	void otherExchangesClicked();

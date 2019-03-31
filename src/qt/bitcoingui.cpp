@@ -338,8 +338,6 @@ void BitcoinGUI::createActions()
     bleuUSDTAction->setToolTip(tr("Buy Peepcoin with USDT on Bleutrade"));
 	tradeOgreAction = new QAction(QIcon(":/icons/tradeogre"), tr("&TradeOgre - PCN/BTC"), this);
     tradeOgreAction->setToolTip(tr("Buy Peepcoin for BTC on TradeOgre"));
-	cryptoHubAction = new QAction(QIcon(":/icons/cryptohub"), tr("&CryptoHub - PCN/BTC"), this);
-    cryptoHubAction->setToolTip(tr("Buy Peepcoin for BTC on CryptoHub"));
 	cpatexBTCAction = new QAction(QIcon(":/icons/cpatex"), tr("&C-Patex - PCN/BTC"), this);
     cpatexBTCAction->setToolTip(tr("Buy Peepcoin for BTC on C-Patex"));
 	cpatexDOGEAction = new QAction(QIcon(":/icons/cpatex"), tr("&C-Patex - PCN/DOGE"), this);
@@ -403,7 +401,6 @@ void BitcoinGUI::createActions()
     connect(bleuETHAction, SIGNAL(triggered()), this, SLOT(bleuETHClicked()));
 	connect(bleuUSDTAction, SIGNAL(triggered()), this, SLOT(bleuUSDTClicked()));
 	connect(tradeOgreAction, SIGNAL(triggered()), this, SLOT(tradeOgreClicked()));
-	connect(cryptoHubAction, SIGNAL(triggered()), this, SLOT(cryptoHubClicked()));
 	connect(cpatexBTCAction, SIGNAL(triggered()), this, SLOT(cpatexBTCClicked()));
 	connect(cpatexDOGEAction, SIGNAL(triggered()), this, SLOT(cpatexDOGEClicked()));
 	connect(otherExchangesAction, SIGNAL(triggered()), this, SLOT(otherExchangesClicked()));
@@ -456,8 +453,6 @@ void BitcoinGUI::createMenuBar()
 	exchanges->addAction(bleuUSDTAction);	
 	exchanges->addSeparator();
 	exchanges->addAction(tradeOgreAction);
-    exchanges->addSeparator();
-	exchanges->addAction(cryptoHubAction);
     exchanges->addSeparator();
     exchanges->addAction(cpatexBTCAction);
     exchanges->addAction(cpatexDOGEAction);
@@ -706,11 +701,6 @@ void BitcoinGUI::bleuUSDTClicked()
 void BitcoinGUI::tradeOgreClicked()
 {
 	QDesktopServices::openUrl(QUrl("https://tradeogre.com/exchange/BTC-PCN"));
-}
-
-void BitcoinGUI::cryptoHubClicked()
-{
-	QDesktopServices::openUrl(QUrl("https://cryptohub.online/market/PCN/"));
 }
 
 void BitcoinGUI::cpatexBTCClicked()
