@@ -1,15 +1,35 @@
 language: cpp
-
+sudo: required
+dist: trusty
 os:
+- linux
 - osx
 
 before_install:
-- if [[ $TRAVIS_OS_NAME == osx ]]; then brew install git; brew install berkeley-db4;
-  brew install openssl; brew install boost@1.60; brew link boost@1.60 -force; brew
-  install qt5; brew link qt5 -force; brew install libqrencode; sudo easy_install appscript; brew install wget;
-  wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
-  tar xvzf miniupnpc.tar.gz; mv miniupnpc-1.9.20150206 miniupnpc; cd miniupnpc; make
-  -f Makefile upnpc-static; sudo INSTALLPREFIX=/usr/local make install; fi
+- if [[ $TRAVIS_OS_NAME == osx ]]; then 
+     brew install git; 
+     brew install berkeley-db4;
+     brew install openssl; 
+     brew install boost@1.60; 
+     brew link boost@1.60 -force; 
+     brew install qt5; 
+     brew link qt5 -force; 
+     brew install libqrencode; 
+     sudo easy_install appscript; 
+     brew install wget;
+     wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
+     tar xvzf miniupnpc.tar.gz; 
+     mv miniupnpc-1.9.20150206 miniupnpc; 
+     cd miniupnpc; 
+     make -f Makefile upnpc-static; 
+     sudo INSTALLPREFIX=/usr/local make install; 
+     fi
+- if [[ $TRAVIS_OS_NAME == linux ]]; then 
+     sudo /etc/init.d/postgresql stop;
+     cd  ${TRAVIS_BUILD_DIR};
+     bash doc/unix-deps-install.sh;
+     sudo apt-get update;
+     fi
 
 install:
 - ls -ltr
@@ -19,22 +39,36 @@ install:
 
 script:
 - make
-
+- if [[ $TRAVIS_OS_NAME == linux ]]; then 
+     bash src/mxe-build.sh windows32-qt;
+     bash src/mxe-build.sh windows64-qt;
+  fi
 before_deploy:
-- export QTDIR=/usr/local/Cellar/qt/5.11.1
-- chmod -R 755 contrib
-- echo "Before dmg packaging"
-- T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale)
-- python2.7 contrib/macdeploy/macdeployqtplus  -add-qt-tr $T -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app
-- ls -ltr
-- echo "DMG file"
+- if [[ $TRAVIS_OS_NAME == linux ]]; then 
+  strip peepcoin-qt;
+  tar -czvf peepcoin-qt.tar.gz peepcoin-qt;
+  fi
+- if [[ $TRAVIS_OS_NAME == osx ]]; then 
+  export QTDIR=/usr/local/Cellar/qt/5.11.1;
+  chmod -R 755 contrib;
+  echo "Before dmg packaging";
+  T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale);
+  python2.7 contrib/macdeploy/macdeployqtplus  -add-qt-tr $T -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app;
+  ls -ltr;
+  echo "DMG file";
+  fi
 
 deploy:
   provider: releases
   api_key:
-    secure: "USE VALID travis setup release, encrypted oath token"
-  file: "Peepcoin-Qt.dmg"
+    secure: bH32eYUAT4URcrRZ32boAbLYQ7U9WC2Fh2CDZt57UFFcHPugx0dX5QOdKPJe6tQwIsofOwsRjwrcKypyhALAFRVhxUzsfK+I8y+6+H7GR5rBMD2wA85L67TAIFmmRYnGvjuusRrW2xZLIlyN9k0mHnG+uy2QnnKW/Do5myPxhMbEb9Il7q1eF9YwGprXxd7y/qAXRxDMAqpDIMewviQLU4FONFS7bUzHvgY7wWpTxLK5FCGIsK6SHlc68f1BYRSOdEkVUi6nZ9+8jdrGsmvc55+qritT6qS1GoHSGINJHUb+GdXmxfhAA1TXHSgy84OWHDUnnTCre62VBlA00ZvF4Aih/rQVwfPWzUrO27AjRpJh49lah9FzVwnAoRYr/UyOKDcHXQA6WzzX4BplP4Ymt5art0wEE3e6YpJ3B7JOtOKLJw5WDlIdpBCO16Z3vV8F+Yq5CDhPlJ7Z+FMW/7fmQDWp22RjDGMg7gxwPOV8G6wSgu1Ft4fINIgIblEpiZV1jE19QqwHR0ZinRs1gcXu/UcZmUZL+yvoRJZMRWqBEtguzSoBRE4reo960otSUP2pJaYptAzoPeW1R+cHk4Aoxwb3qBj4vHMOLQFXllC8qvt+4zx9fCO7tX44u7qo56sKej0U3p64FN2F6rp7o+yWZtlZbZaL7shnW4gWoXpEqhE=
+  file: 
+      - Peepcoin-Qt.dmg
+      - peepcoin-qt.tar.gz
+      - release/peepcoin-qt-i686.exe
+      - release/peepcoin-qt-x86_64.exe
   skip_cleanup: true
   on:
     repo: PXN-Foundation/Peepcoin
     tags: true
+    branch: Temp
