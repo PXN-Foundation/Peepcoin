@@ -10,8 +10,8 @@ before_install:
      brew install git; 
      brew install berkeley-db4;
      brew install openssl; 
-     brew install boost@1.60; 
-     brew link boost@1.60 -force; 
+     brew install boost@1.64; 
+     brew link boost@1.64 -force; 
      brew install qt5; 
      brew link qt5 -force; 
      brew install libqrencode; 
@@ -71,4 +71,4 @@ deploy:
   on:
     repo: PXN-Foundation/Peepcoin
     tags: true
-    branch: Temp
+    branch: QA
