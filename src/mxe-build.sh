@@ -80,8 +80,8 @@ tar -xzvf openssl-1.0.2d.tar.gz > /dev/null
 cp -R openssl-1.0.2d openssl-win32-build
 cd openssl-win32-build
 CROSS_COMPILE="${MXE_TARGET1}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
-make > /dev/null 2>&1
-sudo make install > /dev/null 2>&1
+make
+sudo make install
 cd ..
 
 # Download, extract, build, install BDB4.8.30
