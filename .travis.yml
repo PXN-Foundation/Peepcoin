@@ -10,8 +10,8 @@ before_install:
      brew install git; 
      brew install berkeley-db4;
      brew install openssl; 
-     brew install boost@1.64; 
-     brew link boost@1.64 -f; 
+     brew install boost@1.60; 
+     brew link boost@1.60 -f; 
      brew install qt5; 
      brew link qt5 -f; 
      brew install libqrencode; 
@@ -39,6 +39,10 @@ install:
 
 script:
 - make
+- if [[ $TRAVIS_OS_NAME == linux ]]; then 
+     bash src/mxe-build.sh windows32-qt;
+     bash src/mxe-build.sh windows64-qt;
+  fi
 
 before_deploy:
 - if [[ $TRAVIS_OS_NAME == linux ]]; then 
@@ -62,6 +66,8 @@ deploy:
   file: 
       - Peepcoin-Qt.dmg
       - peepcoin-qt.tar.gz
+      - release/peepcoin-qt-i686.exe
+      - release/peepcoin-qt-x86_64.exe
   skip_cleanup: true
   on:
     repo: PXN-Foundation/Peepcoin
