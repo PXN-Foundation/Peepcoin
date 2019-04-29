@@ -44,11 +44,12 @@ echo "deb [arch=amd64] http://mirror.mxe.cc/repos/apt trusty main" \
 sudo apt-key adv --keyserver keyserver.ubuntu.com \
     --recv-keys 86B72ED9
 
+
 sudo apt-get update
 
 # Add the required MXE build packages and libraries.
 sudo apt-get --yes install mxe-${MXE_TARGET}-cc
-sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
+# sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
 sudo apt-get --yes -f install
@@ -60,6 +61,16 @@ export PATH=$PATH:$MXE_PATH/usr/bin
 MXE_INCLUDE_PATH=$MXE_PATH/usr/${MXE_TARGET1}/include
 MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
 #TRAVIS_BUILD_DIR=~/Peepcoin
+
+# Download, extract, build, install openssl1.0.2
+wget https://www.openssl.org/source/openssl-1.0.2d.tar.gz
+tar -xzvf openssl-1.0.2d.tar.gz
+cp -R openssl-1.0.2d openssl-win32-build
+cd openssl-win32-build
+CROSS_COMPILE="${MXE_TARGET}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
+make
+sudo make install
+cd ..
 
 # Download, extract, build, install BDB4.8.30
 cd ${TRAVIS_BUILD_DIR}
