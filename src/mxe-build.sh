@@ -71,7 +71,7 @@ echo "using gcc : mxe : ${MXE_TARGET1}.static-g++ : <rc>${MXE_TARGET1}-windres <
 export PATH=$MXE_PATH/usr/bin:$PATH  // to avoid this error ${MXE_TARGET1}-g++' not found
 ./b2 toolset=gcc address-model=32 target-os=windows variant=release threading=multi threadapi=win32 \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/bin/usr/${MXE_TARGET1}.static --user-config=user-config.jam \
-	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install > /dev/null 2>&1
+	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install
 cd ..
 
 # Download, extract, build, install openssl1.0.2
@@ -106,9 +106,9 @@ CFLAGS="-DSTATICLIB -DDLL_EXPORT -DPIC -I$MXE_PATH/usr/bin/${MXE_TARGET1}/includ
     --host=${HOST} \
     --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 
-make > /dev/null 2>&1
+make > /dev/null
 
-sudo make install > /dev/null 2>&1
+sudo make install > /dev/null
 
 # pthread_t and pid_t change to u_int32_t in berkeley db mxe header files
 sudo sed -i 's/pthread_t/u_int32_t/g' $MXE_INCLUDE_PATH/db.h
@@ -128,7 +128,7 @@ CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
     --host=${HOST} \
     --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 
-make > /dev/null 2>&1
+make > /dev/null
 cp .libs/libpng16.a .libs/libpng.a
 
 # Download, extract, build QREncode (not finished)
