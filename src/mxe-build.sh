@@ -67,7 +67,7 @@ wget https://www.openssl.org/source/openssl-1.0.2d.tar.gz
 tar -xzvf openssl-1.0.2d.tar.gz
 cp -R openssl-1.0.2d openssl-win32-build
 cd openssl-win32-build
-CROSS_COMPILE="${MXE_TARGET}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
+CROSS_COMPILE="${MXE_TARGET1}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 make
 sudo make install
 cd ..
