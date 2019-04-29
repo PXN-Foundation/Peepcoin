@@ -4,7 +4,10 @@ dist: trusty
 os:
 - linux
 - osx
-
+cache:
+    directories:
+     - /usr/
+     
 before_install:
 - if [[ $TRAVIS_OS_NAME == osx ]]; then 
      brew install git; 
