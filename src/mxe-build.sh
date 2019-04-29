@@ -50,7 +50,7 @@ sudo apt-get update
 # Add the required MXE build packages and libraries.
 sudo apt-get --yes install mxe-${MXE_TARGET}-cc
 # sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
-sudo apt-get --yes install mxe-${MXE_TARGET}-boost
+# sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
 sudo apt-get --yes -f install
 #sudo apt-get --yes install mxe-${MXE_TARGET}-db
@@ -61,6 +61,18 @@ export PATH=$PATH:$MXE_PATH/usr/bin
 MXE_INCLUDE_PATH=$MXE_PATH/usr/${MXE_TARGET1}/include
 MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
 #TRAVIS_BUILD_DIR=~/Peepcoin
+
+# Download, extract, build, install boost 1.65.1
+wget https://sourceforge.net/projects/boost/files/boost/1.65.1/boost_1_65_1.tar.bz2
+tar -xjvf boost_1_65_1.tar.bz2
+cd boost_1_65_1
+./bootstrap.sh --without-icu
+echo "using gcc : mxe : ${MXE_TARGET1}.static-g++ : <rc>${MXE_TARGET1}-windres <archiver>${MXE_TARGET1}-ar <ranlib>${MXE_TARGET1}-ranlib ;" > user-config.jam
+export PATH=$MXE_PATH/usr/bin:$PATH  // to avoid this error ${MXE_TARGET1}-g++' not found
+./b2 toolset=gcc address-model=32 target-os=windows variant=release threading=multi threadapi=win32 \
+	link=static runtime-link=static --prefix=$MXE_PATH/usr/bin/usr/${MXE_TARGET1}.static --user-config=user-config.jam \
+	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install
+cd ..
 
 # Download, extract, build, install openssl1.0.2
 wget https://www.openssl.org/source/openssl-1.0.2d.tar.gz
