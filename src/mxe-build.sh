@@ -64,7 +64,7 @@ MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
 
 # Download, extract, build, install boost 1.65.1
 wget https://sourceforge.net/projects/boost/files/boost/1.65.1/boost_1_65_1.tar.bz2
-tar -xjvf boost_1_65_1.tar.bz2
+tar -xjvf boost_1_65_1.tar.bz2 > /dev/null
 cd boost_1_65_1
 ./bootstrap.sh --without-icu
 echo "using gcc : mxe : ${MXE_TARGET1}.static-g++ : <rc>${MXE_TARGET1}-windres <archiver>${MXE_TARGET1}-ar <ranlib>${MXE_TARGET1}-ranlib ;" > user-config.jam
@@ -76,7 +76,7 @@ cd ..
 
 # Download, extract, build, install openssl1.0.2
 wget https://www.openssl.org/source/openssl-1.0.2d.tar.gz
-tar -xzvf openssl-1.0.2d.tar.gz
+tar -xzvf openssl-1.0.2d.tar.gz > /dev/null
 cp -R openssl-1.0.2d openssl-win32-build
 cd openssl-win32-build
 CROSS_COMPILE="${MXE_TARGET1}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
@@ -87,7 +87,7 @@ cd ..
 # Download, extract, build, install BDB4.8.30
 cd ${TRAVIS_BUILD_DIR}
 wget -N 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
-tar zxf db-4.8.30.NC.tar.gz
+tar zxf db-4.8.30.NC.tar.gz > /dev/null
 cd db-4.8.30.NC
 mkdir build_mxe
 cd build_mxe
@@ -118,7 +118,7 @@ sudo sed -i 's/pid_t/u_int32_t/g' $MXE_INCLUDE_PATH/db_cxx.h
 # Download, extract, build, LibPNG 1.6.16 (required for QREncode)
 cd ${TRAVIS_BUILD_DIR}
 wget -N 'http://download.sourceforge.net/libpng/libpng-1.6.16.tar.gz'
-tar xzf libpng-1.6.16.tar.gz
+tar xzf libpng-1.6.16.tar.gz > /dev/null
 cd libpng-1.6.16
 make clean
 CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
@@ -134,7 +134,7 @@ cp .libs/libpng16.a .libs/libpng.a
 # Download, extract, build QREncode (not finished)
 cd ${TRAVIS_BUILD_DIR}
 wget -N 'http://fukuchi.org/works/qrencode/qrencode-4.0.2.tar.gz'
-tar xzf qrencode-4.0.2.tar.gz
+tar xzf qrencode-4.0.2.tar.gz > /dev/null
 cd qrencode-4.0.2
 #make clean
 #LIBS="../libpng-1.6.16/.libs/libpng.a ../../mingw32/${MXE_TARGET1}/lib/libz.a" \
