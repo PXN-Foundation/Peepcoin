@@ -10,24 +10,28 @@ if [ $1 == "windows32" ]; then
     CPU_TARGET="i686"
     QT_BUILD="no"
     HOST="x86"
+    ADDRESSMODEL="32"
 elif [ $1 == "windows64" ]; then
     MXE_TARGET="x86-64-w64-mingw32.static"
     MXE_TARGET1="x86_64-w64-mingw32.static"
     CPU_TARGET="x86_64"
     QT_BUILD="no"
     HOST="x86_64"
+    ADDRESSMODEL="64"
 elif [ $1 == "windows32-qt" ]; then
     MXE_TARGET="i686-w64-mingw32.static"
     MXE_TARGET1="i686-w64-mingw32.static"
     CPU_TARGET="i686"
     QT_BUILD="yes"
     HOST="x86"
+    ADDRESSMODEL="32"
 elif [ $1 == "windows64-qt" ]; then
     MXE_TARGET="x86-64-w64-mingw32.static"
     MXE_TARGET1="x86_64-w64-mingw32.static"
     CPU_TARGET="x86_64"
     QT_BUILD="yes"
     HOST="x86_64"
+    ADDRESSMODEL="64"
 else
     echo "Syntax: $0 [ windows32 | windows64 | windows32-qt | windows64-qt ]">&2
     exit 1
@@ -60,7 +64,7 @@ MXE_PATH=/usr/lib/mxe
 export PATH=$PATH:$MXE_PATH/usr/bin
 MXE_INCLUDE_PATH=$MXE_PATH/usr/${MXE_TARGET1}/include
 MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
-#TRAVIS_BUILD_DIR=~/Peepcoin
+TRAVIS_BUILD_DIR=~/Peepcoin
 
 # Download, extract, build, install boost 1.65.1
 wget https://sourceforge.net/projects/boost/files/boost/1.65.1/boost_1_65_1.tar.bz2
@@ -69,10 +73,9 @@ cd boost_1_65_1
 ./bootstrap.sh --without-icu
 echo "using gcc : mxe : ${MXE_TARGET1}-g++ : <rc>${MXE_TARGET1}-windres <archiver>${MXE_TARGET1}-ar <ranlib>${MXE_TARGET1}-ranlib ;" > user-config.jam
 
-./b2 toolset=gcc address-model=32 target-os=windows variant=release threading=multi threadapi=win32 \
+travis wait 30 ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=pthread \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/bin/usr/${MXE_TARGET1} --user-config=user-config.jam \
 	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install > /dev/null 2>&1
-
 cd ..
 
 # Download, extract, build, install openssl1.0.2
