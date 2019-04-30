@@ -79,9 +79,9 @@ sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=re
 cd ..
 
 # Download, extract, build, install openssl1.0.2
-wget https://www.openssl.org/source/old/1.0.1/openssl-1.0.1u.tar.gz
-tar -xzvf openssl-1.0.1u.tar.gz > /dev/null
-cp -R openssl-1.0.1u openssl-win32-build
+wget https://www.openssl.org/source/old/1.0.0/openssl-1.0.0s.tar.gz
+tar -xzvf openssl-1.0.0s.tar.gz > /dev/null
+cp -R openssl-1.0.0s openssl-win32-build
 cd openssl-win32-build
 CROSS_COMPILE="${MXE_TARGET1}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 make > /dev/null 2>&1
