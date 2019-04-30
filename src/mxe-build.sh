@@ -68,7 +68,7 @@ tar -xjvf boost_1_65_1.tar.bz2 > /dev/null
 cd boost_1_65_1
 ./bootstrap.sh --without-icu
 echo "using gcc : mxe : ${MXE_TARGET1}.static-g++ : <rc>${MXE_TARGET1}-windres <archiver>${MXE_TARGET1}-ar <ranlib>${MXE_TARGET1}-ranlib ;" > user-config.jam
-export PATH=$MXE_PATH/usr/bin:$PATH  // to avoid this error ${MXE_TARGET1}-g++' not found
+
 ./b2 toolset=gcc address-model=32 target-os=windows variant=release threading=multi threadapi=win32 \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/bin/usr/${MXE_TARGET1}.static --user-config=user-config.jam \
 	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install
