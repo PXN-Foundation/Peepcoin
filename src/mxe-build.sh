@@ -61,7 +61,7 @@ sudo apt-get --yes -f install
 
 # Some variables used by both Qt and daemon builds.
 MXE_PATH=/usr/lib/mxe
-sudo export PATH=$PATH:$MXE_PATH/usr/bin
+export PATH=$PATH:$MXE_PATH/usr/bin
 MXE_INCLUDE_PATH=$MXE_PATH/usr/${MXE_TARGET1}/include
 MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
 #TRAVIS_BUILD_DIR=~/Peepcoin
@@ -72,7 +72,7 @@ tar -xjvf boost_1_65_1.tar.bz2 > /dev/null
 cd boost_1_65_1
 ./bootstrap.sh --without-icu
 echo "using gcc : mxe : $MXE_PATH/usr/bin/${MXE_TARGET1}-g++ : <rc>$MXE_PATH/usr/bin/${MXE_TARGET1}-windres <archiver>$MXE_PATH/usr/bin/${MXE_TARGET1}-ar <ranlib>$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib ;" > user-config.jam
-sudo export PATH=/usr/lib/mxe/usr/bin:$PATH
+export PATH=/usr/lib/mxe/usr/bin:$PATH
 sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=win32 \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/${MXE_TARGET1} --user-config=user-config.jam \
 	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install > /dev/null 2>&1
