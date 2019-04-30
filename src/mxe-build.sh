@@ -73,7 +73,7 @@ cd boost_1_65_1
 ./bootstrap.sh --without-icu
 echo "using gcc : mxe : ${MXE_TARGET1}-g++ : <rc>${MXE_TARGET1}-windres <archiver>${MXE_TARGET1}-ar <ranlib>${MXE_TARGET1}-ranlib ;" > user-config.jam
 
-travis wait 30 ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=win32 \
+./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=win32 \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/${MXE_TARGET1} --user-config=user-config.jam \
 	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install
 cd ..
