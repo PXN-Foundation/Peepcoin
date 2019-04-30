@@ -71,7 +71,7 @@ wget https://sourceforge.net/projects/boost/files/boost/1.65.1/boost_1_65_1.tar.
 tar -xjvf boost_1_65_1.tar.bz2 > /dev/null
 cd boost_1_65_1
 ./bootstrap.sh --without-icu
-echo "using gcc : mxe : ${MXE_TARGET1}-g++ : <rc>${MXE_TARGET1}-windres <archiver>${MXE_TARGET1}-ar <ranlib>${MXE_TARGET1}-ranlib ;" > user-config.jam
+echo "using gcc : mxe : $MXE_PATH/usr/bin/${MXE_TARGET1}-g++ : <rc>$MXE_PATH/usr/bin/${MXE_TARGET1}-windres <archiver>$MXE_PATH/usr/bin/${MXE_TARGET1}-ar <ranlib>$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib ;" > user-config.jam
 sudo export PATH=/usr/lib/mxe/usr/bin:$PATH
 sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=win32 \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/${MXE_TARGET1} --user-config=user-config.jam \
