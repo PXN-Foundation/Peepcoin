@@ -67,11 +67,11 @@ wget https://sourceforge.net/projects/boost/files/boost/1.65.1/boost_1_65_1.tar.
 tar -xjvf boost_1_65_1.tar.bz2 > /dev/null
 cd boost_1_65_1
 ./bootstrap.sh --without-icu
-echo "using gcc : mxe : ${MXE_TARGET1}.static-g++ : <rc>${MXE_TARGET1}-windres <archiver>${MXE_TARGET1}-ar <ranlib>${MXE_TARGET1}-ranlib ;" > user-config.jam
+echo "using gcc : mxe : ${MXE_TARGET1}-g++ : <rc>${MXE_TARGET1}-windres <archiver>${MXE_TARGET1}-ar <ranlib>${MXE_TARGET1}-ranlib ;" > user-config.jam
 
 ./b2 toolset=gcc address-model=32 target-os=windows variant=release threading=multi threadapi=win32 \
-	link=static runtime-link=static --prefix=$MXE_PATH/usr/bin/usr/${MXE_TARGET1}.static --user-config=user-config.jam \
-	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install
+	link=static runtime-link=static --prefix=$MXE_PATH/usr/bin/usr/${MXE_TARGET1} --user-config=user-config.jam \
+	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install > /dev/null 2>&1
 
 cd ..
 
@@ -81,8 +81,8 @@ tar -xzvf openssl-1.0.2d.tar.gz > /dev/null
 cp -R openssl-1.0.2d openssl-win32-build
 cd openssl-win32-build
 CROSS_COMPILE="${MXE_TARGET1}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
-make
-sudo make install
+make > /dev/null 2>&1
+sudo make install > /dev/null 2>&1
 cd ..
 
 # Download, extract, build, install BDB4.8.30
@@ -107,9 +107,9 @@ CFLAGS="-DSTATICLIB -DDLL_EXPORT -DPIC -I$MXE_PATH/usr/bin/${MXE_TARGET1}/includ
     --host=${HOST} \
     --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 
-make > /dev/null
+make > /dev/null 2>&1
 
-sudo make install > /dev/null
+sudo make install > /dev/null 2>&1
 
 # pthread_t and pid_t change to u_int32_t in berkeley db mxe header files
 sudo sed -i 's/pthread_t/u_int32_t/g' $MXE_INCLUDE_PATH/db.h
@@ -129,7 +129,7 @@ CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
     --host=${HOST} \
     --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 
-make > /dev/null
+make > /dev/null 2>&1
 cp .libs/libpng16.a .libs/libpng.a
 
 # Download, extract, build QREncode (not finished)
@@ -159,7 +159,7 @@ if [ $QT_BUILD == "no" ]; then
     cd ${TRAVIS_BUILD_DIR}
     cd src
     make -f makefile.linux-mingw -j $NCPU \
-        DEPSDIR=$MXE_PATH/usr/$MXE_TARGET TARGET_PLATFORM=$CPU_TARGET
+        DEPSDIR=$MXE_PATH/usr/$MXE_TARGET TARGET_PLATFORM=$CPU_TARGET > /dev/null 2>&1
 else
     #sudo apt-get --yes install mxe-${MXE_TARGET}-qt5
     sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
@@ -191,7 +191,7 @@ ${MXE_TARGET1}-qmake-qt5 \
         QMAKE_LRELEASE=$MXE_PATH/usr/$MXE_TARGET1/qt5/bin/lrelease Peepcoin-qt.pro
 
 #make clean
-make -j$(nproc) -f Makefile.Release
+make -j$(nproc) -f Makefile.Release > /dev/null 2>&1
 mv release/peepcoin-qt.exe release/peepcoin-qt-${CPU_TARGET}.exe
 #make -j$(nproc) -f Makefile
 fi
