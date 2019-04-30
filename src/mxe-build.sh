@@ -75,7 +75,7 @@ echo "using gcc : mxe : $MXE_PATH/usr/bin/${MXE_TARGET1}-g++ : <rc>$MXE_PATH/usr
 sudo export PATH=/usr/lib/mxe/usr/bin:$PATH
 sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=win32 \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/${MXE_TARGET1} --user-config=user-config.jam \
-	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install
+	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install > /dev/null 2>&1
 cd ..
 
 # Download, extract, build, install openssl1.0.2
@@ -180,7 +180,7 @@ TARGET_OS=OS_WINDOWS_CROSSCOMPILE make libleveldb.a libmemenv.a CC=$MXE_PATH/usr
 
 cd ${TRAVIS_BUILD_DIR}
 
-${MXE_TARGET1}-qmake-qt5 \
+$MXE_PATH/usr/bin/${MXE_TARGET1}-qmake-qt5 \
         BOOST_LIB_SUFFIX=-mt \
         BOOST_THREAD_LIB_SUFFIX=_win32-mt \
         BOOST_INCLUDE_PATH=$MXE_INCLUDE_PATH/boost \
