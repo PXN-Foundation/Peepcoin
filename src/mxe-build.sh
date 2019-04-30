@@ -75,7 +75,7 @@ echo "using gcc : mxe : $MXE_PATH/usr/bin/${MXE_TARGET1}-g++ : <rc>$MXE_PATH/usr
 export PATH=/usr/lib/mxe/usr/bin:$PATH
 sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=win32 \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/${MXE_TARGET1} --user-config=user-config.jam \
-	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install > /dev/null 2>&1
+	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install
 cd ..
 
 # Download, extract, build, install openssl1.0.2
