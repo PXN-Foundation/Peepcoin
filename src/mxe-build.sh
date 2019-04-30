@@ -72,6 +72,7 @@ export PATH=$MXE_PATH/usr/bin:$PATH  // to avoid this error ${MXE_TARGET1}-g++' 
 ./b2 toolset=gcc address-model=32 target-os=windows variant=release threading=multi threadapi=win32 \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/bin/usr/${MXE_TARGET1}.static --user-config=user-config.jam \
 	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install
+
 cd ..
 
 # Download, extract, build, install openssl1.0.2
