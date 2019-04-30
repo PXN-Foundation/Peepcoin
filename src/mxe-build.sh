@@ -73,7 +73,7 @@ cd boost_1_65_1
 ./bootstrap.sh --without-icu
 echo "using gcc : mxe : ${MXE_TARGET1}-g++ : <rc>${MXE_TARGET1}-windres <archiver>${MXE_TARGET1}-ar <ranlib>${MXE_TARGET1}-ranlib ;" > user-config.jam
 
-./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=win32 \
+sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=win32 \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/${MXE_TARGET1} --user-config=user-config.jam \
 	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install
 cd ..
@@ -169,13 +169,13 @@ else
 
 # clean Peepcoin directory before building leveldb because it will clean leveldb as well
 cd ${TRAVIS_BUILD_DIR}
-make clean
+sudo make clean
 
 # cross-compile LevelDB
 cd ${TRAVIS_BUILD_DIR}
 cd src/leveldb
 chmod +x build_detect_platform
-make clean
+sudo make clean
 TARGET_OS=OS_WINDOWS_CROSSCOMPILE make libleveldb.a libmemenv.a CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++
 
 cd ${TRAVIS_BUILD_DIR}
