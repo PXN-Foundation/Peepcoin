@@ -64,7 +64,7 @@ MXE_PATH=/usr/lib/mxe
 export PATH=$PATH:$MXE_PATH/usr/bin
 MXE_INCLUDE_PATH=$MXE_PATH/usr/${MXE_TARGET1}/include
 MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
-TRAVIS_BUILD_DIR=~/Peepcoin
+#TRAVIS_BUILD_DIR=~/Peepcoin
 
 # Download, extract, build, install boost 1.65.1
 wget https://sourceforge.net/projects/boost/files/boost/1.65.1/boost_1_65_1.tar.bz2
