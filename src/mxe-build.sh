@@ -194,7 +194,7 @@ ${MXE_TARGET1}-qmake-qt5 \
         QMAKE_LRELEASE=$MXE_PATH/usr/$MXE_TARGET1/qt5/bin/lrelease Peepcoin-qt.pro
 
 #make clean
-make -j$(nproc) -f Makefile.Release > /dev/null 2>&1
+make -j$(nproc) -f Makefile.Release
 mv release/peepcoin-qt.exe release/peepcoin-qt-${CPU_TARGET}.exe
 #make -j$(nproc) -f Makefile
 fi
