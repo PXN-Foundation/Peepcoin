@@ -67,9 +67,9 @@ MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
 #TRAVIS_BUILD_DIR=~/Peepcoin
 
 # Download, extract, build, install boost 1.65.1
-wget https://sourceforge.net/projects/boost/files/boost/1.65.1/boost_1_65_1.tar.bz2
-tar -xjvf boost_1_65_1.tar.bz2 > /dev/null
-cd boost_1_65_1
+wget https://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.bz2
+tar -xjvf boost_1_64_0.tar.bz2 > /dev/null
+cd boost_1_64_0
 ./bootstrap.sh --without-icu
 echo "using gcc : mxe : $MXE_PATH/usr/bin/${MXE_TARGET1}-g++ : <rc>$MXE_PATH/usr/bin/${MXE_TARGET1}-windres <archiver>$MXE_PATH/usr/bin/${MXE_TARGET1}-ar <ranlib>$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib ;" > user-config.jam
 export PATH=/usr/lib/mxe/usr/bin:$PATH
@@ -79,9 +79,9 @@ sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=re
 cd ..
 
 # Download, extract, build, install openssl1.0.2
-wget https://www.openssl.org/source/old/1.0.0/openssl-1.0.0s.tar.gz
-tar -xzvf openssl-1.0.0s.tar.gz > /dev/null
-cp -R openssl-1.0.0s openssl-win32-build
+wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2n.tar.gz
+tar -xzvf openssl-1.0.2n.tar.gz > /dev/null
+cp -R openssl-1.0.2n openssl-win32-build
 cd openssl-win32-build
 CROSS_COMPILE="${MXE_TARGET1}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 make > /dev/null 2>&1
