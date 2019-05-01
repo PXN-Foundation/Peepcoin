@@ -56,6 +56,7 @@ sudo apt-get --yes install mxe-${MXE_TARGET}-cc
 # sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 # sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
+sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
 sudo apt-get --yes -f install
 #sudo apt-get --yes install mxe-${MXE_TARGET}-db
 
@@ -165,37 +166,36 @@ if [ $QT_BUILD == "no" ]; then
         DEPSDIR=$MXE_PATH/usr/$MXE_TARGET TARGET_PLATFORM=$CPU_TARGET > /dev/null 2>&1
 else
     #sudo apt-get --yes install mxe-${MXE_TARGET}-qt5
-    sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
+    
+	# clean Peepcoin directory before building leveldb because it will clean leveldb as well
+	cd ${TRAVIS_BUILD_DIR}
+	sudo make clean
 
-# clean Peepcoin directory before building leveldb because it will clean leveldb as well
-cd ${TRAVIS_BUILD_DIR}
-sudo make clean
+	# cross-compile LevelDB
+	cd ${TRAVIS_BUILD_DIR}
+	cd src/leveldb
+	chmod +x build_detect_platform
+	sudo make clean
+	TARGET_OS=OS_WINDOWS_CROSSCOMPILE make libleveldb.a libmemenv.a CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++
 
-# cross-compile LevelDB
-cd ${TRAVIS_BUILD_DIR}
-cd src/leveldb
-chmod +x build_detect_platform
-sudo make clean
-TARGET_OS=OS_WINDOWS_CROSSCOMPILE make libleveldb.a libmemenv.a CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++
+	cd ${TRAVIS_BUILD_DIR}
 
-cd ${TRAVIS_BUILD_DIR}
+	$MXE_PATH/usr/bin/${MXE_TARGET1}-qmake-qt5 \
+		BOOST_LIB_SUFFIX=-mt \
+		BOOST_THREAD_LIB_SUFFIX=_win32-mt \
+		BOOST_INCLUDE_PATH=$MXE_INCLUDE_PATH/boost \
+		BOOST_LIB_PATH=$MXE_LIB_PATH \
+		OPENSSL_INCLUDE_PATH=$MXE_INCLUDE_PATH/openssl \
+		OPENSSL_LIB_PATH=$MXE_LIB_PATH \
+		BDB_INCLUDE_PATH=$MXE_INCLUDE_PATH \
+		BDB_LIB_PATH=$MXE_LIB_PATH \
+		MINIUPNPC_INCLUDE_PATH=$MXE_INCLUDE_PATH \
+		MINIUPNPC_LIB_PATH=$MXE_LIB_PATH \
+		QMAKE_LRELEASE=$MXE_PATH/usr/$MXE_TARGET1/qt5/bin/lrelease Peepcoin-qt.pro
 
-$MXE_PATH/usr/bin/${MXE_TARGET1}-qmake-qt5 \
-        BOOST_LIB_SUFFIX=-mt \
-        BOOST_THREAD_LIB_SUFFIX=_win32-mt \
-        BOOST_INCLUDE_PATH=$MXE_INCLUDE_PATH/boost \
-        BOOST_LIB_PATH=$MXE_LIB_PATH \
-        OPENSSL_INCLUDE_PATH=$MXE_INCLUDE_PATH/openssl \
-        OPENSSL_LIB_PATH=$MXE_LIB_PATH \
-        BDB_INCLUDE_PATH=$MXE_INCLUDE_PATH \
-        BDB_LIB_PATH=$MXE_LIB_PATH \
-        MINIUPNPC_INCLUDE_PATH=$MXE_INCLUDE_PATH \
-        MINIUPNPC_LIB_PATH=$MXE_LIB_PATH \
-        QMAKE_LRELEASE=$MXE_PATH/usr/$MXE_TARGET1/qt5/bin/lrelease Peepcoin-qt.pro
-
-#make clean
-make -j$(nproc) -f Makefile.Release
-mv release/peepcoin-qt.exe release/peepcoin-qt-${CPU_TARGET}.exe
-#make -j$(nproc) -f Makefile
+	#make clean
+	make -j$(nproc) -f Makefile.Release
+	mv release/peepcoin-qt.exe release/peepcoin-qt-${CPU_TARGET}.exe
+	#make -j$(nproc) -f Makefile
 fi
 
