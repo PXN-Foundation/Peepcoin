@@ -53,7 +53,7 @@ sudo apt-get update
 
 # Add the required MXE build packages and libraries.
 sudo apt-get --yes install mxe-${MXE_TARGET}-cc
-# sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
+sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 # sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
 sudo apt-get --yes -f install
@@ -79,14 +79,14 @@ sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=re
 cd ..
 
 # Download, extract, build, install openssl1.0.2
-wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2n.tar.gz
-tar -xzvf openssl-1.0.2n.tar.gz > /dev/null
-cp -R openssl-1.0.2n openssl-win32-build
-cd openssl-win32-build
-CROSS_COMPILE="${MXE_TARGET1}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
-make > /dev/null 2>&1
-sudo make install > /dev/null 2>&1
-cd ..
+#wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2n.tar.gz
+#tar -xzvf openssl-1.0.2n.tar.gz > /dev/null
+#cp -R openssl-1.0.2n openssl-win32-build
+#cd openssl-win32-build
+#CROSS_COMPILE="${MXE_TARGET1}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
+#make > /dev/null 2>&1
+#sudo make install > /dev/null 2>&1
+#cd ..
 
 # Download, extract, build, install BDB4.8.30
 cd ${TRAVIS_BUILD_DIR}
