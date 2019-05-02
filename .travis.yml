@@ -1,9 +1,5 @@
 language: cpp
 sudo: required
-dist: trusty
-os:
-- linux
-- osx
     
 before_install:
 - if [[ $TRAVIS_OS_NAME == osx ]]; then 
@@ -37,12 +33,33 @@ install:
 - chmod 755 src/leveldb/build_detect_platform
 - qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 Peepcoin-qt.pro
 
-script:
-- make
-- if [[ $TRAVIS_OS_NAME == linux ]]; then 
-     bash src/mxe-build.sh windows32-qt;
-     bash src/mxe-build.sh windows64-qt;
-  fi
+matrix:
+  include:
+  # Build Peepcoin
+  # Cross-compile Windows 32-bit 
+  - os: linux
+    dist: trusty
+    sudo: required
+    script: bash src/mxe-build.sh windows32-qt;
+
+  # Build Peepcoin
+  # Cross-compile Windows 64-bit 
+  - os: linux
+    dist: trusty
+    sudo: required
+    script: bash src/mxe-build.sh windows64-qt;
+ 
+  # Build Peepcoin-qt
+  # OS X 10.13 (High Sierra)
+  - os: osx
+    sudo: required
+    script: make
+  
+  # Build Peepcoin-qt
+  - os: linux
+    dist: trusty
+    sudo: required
+    script: make
 
 before_deploy:
 - if [[ $TRAVIS_OS_NAME == linux ]]; then 
