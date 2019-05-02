@@ -38,14 +38,14 @@ matrix:
   # Build Peepcoin
   # Cross-compile Windows 32-bit 
   - os: linux
-    dist: trusty
+    dist: xenial
     sudo: required
     script: bash src/mxe-build.sh windows32-qt;
 
   # Build Peepcoin
   # Cross-compile Windows 64-bit 
   - os: linux
-    dist: trusty
+    dist: xenial
     sudo: required
     script: bash src/mxe-build.sh windows64-qt;
  
@@ -57,7 +57,7 @@ matrix:
   
   # Build Peepcoin-qt
   - os: linux
-    dist: trusty
+    dist: xenial
     sudo: required
     script: make
 
