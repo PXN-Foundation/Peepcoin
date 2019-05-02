@@ -36,7 +36,9 @@ else
     echo "Syntax: $0 [ windows32 | windows64 | windows32-qt | windows64-qt ]">&2
     exit 1
 fi
-
+# weird xenial travis bug
+sudo systemctl enable mysql
+sudo service mysql start
 # Add the MXE package repository.
 sudo apt-get update
 
