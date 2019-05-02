@@ -59,7 +59,9 @@ sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
 sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
 sudo apt-get --yes -f install
 #sudo apt-get --yes install mxe-${MXE_TARGET}-db
-
+sudo apt-get install p7zip-full autoconf automake autopoint bash bison bzip2 cmake flex gettext git g++ gperf intltool libffi-dev libtool libltdl-dev libssl-dev libxml-parser-perl make openssl patch perl pkg-config python ruby scons sed unzip wget xz-utils
+sudo apt-get install libtool-bin
+apt-get install libgtk2.0-dev
 # Some variables used by both Qt and daemon builds.
 MXE_PATH=/usr/lib/mxe
 export PATH=$PATH:$MXE_PATH/usr/bin
@@ -80,16 +82,16 @@ sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=re
 cd ..
 
 # Download, extract, build, install openssl1.0.2
-wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2n.tar.gz
-tar -xzvf openssl-1.0.2n.tar.gz > /dev/null
-cp -R openssl-1.0.2n openssl-win32-build
+wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2d.tar.gz
+tar -xzvf openssl-1.0.2d.tar.gz > /dev/null
+cp -R openssl-1.0.2d openssl-win32-build
 cd openssl-win32-build
 CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
 CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
 RANLIB=$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib \
 CROSS_COMPILE="${MXE_TARGET1}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 make > /dev/null
-sudo make install_sw
+sudo make install
 cd ..
 
 # Download, extract, build, install BDB4.8.30
