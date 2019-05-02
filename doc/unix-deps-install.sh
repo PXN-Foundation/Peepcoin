@@ -2,7 +2,7 @@ sudo add-apt-repository ppa:bitcoin/bitcoin -y
 sudo apt update
 
 sudo apt install git build-essential libdb4.8-dev libdb4.8++-dev -y
-sudo apt install libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev -y
+sudo apt install libssl1.0-dev libboost-all-dev libqrencode-dev libminiupnpc-dev -y
 sudo apt install qt5-default qt5-qmake qtbase5-dev-tools qttools5-dev-tools -y
 
 sudo apt upgrade -y
