@@ -87,7 +87,7 @@ cd openssl-win32-build
 CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
 CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
 RANLIB=$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib \
-CROSS_COMPILE="${MXE_TARGET1}-" ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
+CROSS_COMPILE= ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 make > /dev/null
 sudo make install
 cd ..
