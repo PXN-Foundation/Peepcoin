@@ -36,9 +36,7 @@ else
     echo "Syntax: $0 [ windows32 | windows64 | windows32-qt | windows64-qt ]">&2
     exit 1
 fi
-# strange travis xenial bug
-sudo systemctl enable mysql
-sudo service mysql start
+
 # Add the MXE package repository.
 sudo apt-get update
 
@@ -50,7 +48,6 @@ echo "deb [arch=amd64] http://mirror.mxe.cc/repos/apt trusty main" \
 sudo apt-key adv --keyserver keyserver.ubuntu.com \
     --recv-keys 86B72ED9
 
-
 sudo apt-get update
 
 # Add the required MXE build packages and libraries.
@@ -59,7 +56,6 @@ sudo apt-get --yes install mxe-${MXE_TARGET}-cc
 # sudo apt-get --yes install mxe-${MXE_TARGET}-boost
 sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
 sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
-sudo apt-get --yes -f install
 #sudo apt-get --yes install mxe-${MXE_TARGET}-db
 
 # Some variables used by both Qt and daemon builds.
