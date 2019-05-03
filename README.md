@@ -1,4 +1,5 @@
-https://travis-ci.com/PXN-Foundation/Peepcoin.svg?branch=master
+[![Build Status](https://travis-ci.com/PXN-Foundation/Peepcoin.svg?branch=master)](https://travis-ci.com/PXN-Foundation/Peepcoin)
+
 Peepcoin v1.0.4.0 Alpha
 
 # Intro
