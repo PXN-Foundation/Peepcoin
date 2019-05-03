@@ -11,6 +11,7 @@ if [ $1 == "windows32" ]; then
     QT_BUILD="no"
     HOST="x86"
     ADDRESSMODEL="32"
+    OSSL="mingw"
 elif [ $1 == "windows64" ]; then
     MXE_TARGET="x86-64-w64-mingw32.static"
     MXE_TARGET1="x86_64-w64-mingw32.static"
@@ -18,6 +19,7 @@ elif [ $1 == "windows64" ]; then
     QT_BUILD="no"
     HOST="x86_64"
     ADDRESSMODEL="64"
+    OSSL="mingw64"
 elif [ $1 == "windows32-qt" ]; then
     MXE_TARGET="i686-w64-mingw32.static"
     MXE_TARGET1="i686-w64-mingw32.static"
@@ -25,6 +27,7 @@ elif [ $1 == "windows32-qt" ]; then
     QT_BUILD="yes"
     HOST="x86"
     ADDRESSMODEL="32"
+    OSSL="mingw"
 elif [ $1 == "windows64-qt" ]; then
     MXE_TARGET="x86-64-w64-mingw32.static"
     MXE_TARGET1="x86_64-w64-mingw32.static"
@@ -32,6 +35,7 @@ elif [ $1 == "windows64-qt" ]; then
     QT_BUILD="yes"
     HOST="x86_64"
     ADDRESSMODEL="64"
+    OSSL="mingw64"
 else
     echo "Syntax: $0 [ windows32 | windows64 | windows32-qt | windows64-qt ]">&2
     exit 1
@@ -87,7 +91,7 @@ cd openssl-win32-build
 CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
 CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
 RANLIB=$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib \
-CROSS_COMPILE= ./Configure mingw no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
+CROSS_COMPILE= ./Configure ${OSSL} no-asm no-shared --prefix=$MXE_PATH/usr/${MXE_TARGET1}
 make > /dev/null
 sudo make install
 cd ..
