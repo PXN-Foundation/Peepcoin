@@ -22,13 +22,16 @@ before_install:
      fi
 - if [[ $TRAVIS_OS_NAME == linux ]]; then 
      sudo /etc/init.d/postgresql stop;
+     sudo systemctl enable mysql
+     sudo service mysql start
+     sudo apt dist-upgrade
+     sudo systemctl disable mysql
      cd  ${TRAVIS_BUILD_DIR};
      bash doc/unix-deps-install.sh;
      sudo apt-get update;
      fi
 
 install:
-- ls -ltr
 - cd  ${TRAVIS_BUILD_DIR}
 - chmod 755 src/leveldb/build_detect_platform
 - qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 Peepcoin-qt.pro
