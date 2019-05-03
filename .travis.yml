@@ -28,7 +28,6 @@ before_install:
      sudo systemctl disable mysql
      cd  ${TRAVIS_BUILD_DIR};
      bash doc/unix-deps-install.sh;
-     sudo apt-get update;
      fi
 
 install:
