@@ -1,47 +1,64 @@
 language: cpp
 sudo: required
     
-before_install:
-- if [[ $TRAVIS_OS_NAME == osx ]]; then 
-     brew install git; 
-     brew install berkeley-db4;
-     brew install openssl; 
-     brew install boost@1.60; 
-     brew link boost@1.60 -f; 
-     brew install qt5; 
-     brew link qt5 -f; 
-     brew install libqrencode; 
-     sudo easy_install appscript; 
-     brew install wget;
-     wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
-     tar xvzf miniupnpc.tar.gz; 
-     mv miniupnpc-1.9.20150206 miniupnpc; 
-     cd miniupnpc; 
-     make -f Makefile upnpc-static; 
-     sudo INSTALLPREFIX=/usr/local make install; 
-     fi
-- if [[ $TRAVIS_OS_NAME == linux ]]; then 
-     sudo /etc/init.d/postgresql stop;
-     sudo systemctl enable mysql
-     sudo service mysql start
-     sudo apt dist-upgrade
-     sudo systemctl disable mysql
-     cd  ${TRAVIS_BUILD_DIR};
-     bash doc/unix-deps-install.sh;
-     fi
-
-install:
-- cd  ${TRAVIS_BUILD_DIR}
-- chmod 755 src/leveldb/build_detect_platform
-- qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 Peepcoin-qt.pro
-
 matrix:
   include:
+  # Build Peepcoin-qt MAC
+  # OS X 10.13 (High Sierra)
+  - os: osx
+    sudo: required
+    before_install:
+        brew install git; 
+        brew install berkeley-db4;
+        brew install openssl; 
+        brew install boost@1.60; 
+        brew link boost@1.60 -f; 
+        brew install qt5; 
+        brew link qt5 -f; 
+        brew install libqrencode; 
+        sudo easy_install appscript; 
+        brew install wget;
+        wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
+        tar xvzf miniupnpc.tar.gz; 
+        mv miniupnpc-1.9.20150206 miniupnpc; 
+        cd miniupnpc; 
+        make -f Makefile upnpc-static; 
+        sudo INSTALLPREFIX=/usr/local make install; 
+    install: 
+        cd  ${TRAVIS_BUILD_DIR};
+        chmod 755 src/leveldb/build_detect_platform;
+        qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 Peepcoin-qt.pro;
+    script: make
+  
+  # Build Peepcoin-qt
+  # Compile linux gui
+  - os: linux
+    dist: xenial
+    sudo: required
+    before_install:
+        sudo /etc/init.d/postgresql stop;
+        sudo systemctl enable mysql;
+        sudo service mysql start;
+        sudo apt dist-upgrade;
+        sudo systemctl disable mysql;
+        cd  ${TRAVIS_BUILD_DIR};
+        bash doc/unix-deps-install.sh;
+    install: cd  ${TRAVIS_BUILD_DIR};
+             chmod 755 src/leveldb/build_detect_platform;
+             qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 Peepcoin-qt.pro;
+    script: make  
+    
   # Build Peepcoin
   # Cross-compile Windows 32-bit 
   - os: linux
     dist: xenial
     sudo: required
+    before_install:
+        sudo /etc/init.d/postgresql stop;
+        sudo systemctl enable mysql;
+        sudo service mysql start;
+        sudo apt dist-upgrade;
+        sudo systemctl disable mysql;
     script: bash src/mxe-build.sh windows32-qt;
 
   # Build Peepcoin
@@ -49,19 +66,13 @@ matrix:
   - os: linux
     dist: xenial
     sudo: required
+    before_install:
+        sudo /etc/init.d/postgresql stop;
+        sudo systemctl enable mysql;
+        sudo service mysql start;
+        sudo apt dist-upgrade;
+        sudo systemctl disable mysql;
     script: bash src/mxe-build.sh windows64-qt;
- 
-  # Build Peepcoin-qt
-  # OS X 10.13 (High Sierra)
-  - os: osx
-    sudo: required
-    script: make
-  
-  # Build Peepcoin-qt
-  - os: linux
-    dist: xenial
-    sudo: required
-    script: make
 
 before_deploy:
 - if [[ $TRAVIS_OS_NAME == linux ]]; then 
