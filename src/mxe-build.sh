@@ -72,9 +72,9 @@ MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
 #TRAVIS_BUILD_DIR=~/Peepcoin
 
 # Download, extract, build, install boost 1.65.1
-wget https://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.bz2
-tar -xjvf boost_1_64_0.tar.bz2 > /dev/null
-cd boost_1_64_0
+wget https://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.bz2
+tar -xjvf boost_1_58_0.tar.bz2 > /dev/null
+cd boost_1_58_0
 ./bootstrap.sh --without-icu
 echo "using gcc : mxe : $MXE_PATH/usr/bin/${MXE_TARGET1}-g++ : <rc>$MXE_PATH/usr/bin/${MXE_TARGET1}-windres <archiver>$MXE_PATH/usr/bin/${MXE_TARGET1}-ar <ranlib>$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib ;" > user-config.jam
 export PATH=/usr/lib/mxe/usr/bin:$PATH
