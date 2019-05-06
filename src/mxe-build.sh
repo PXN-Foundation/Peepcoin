@@ -60,7 +60,7 @@ sudo apt-get update
 sudo apt-get --yes install mxe-${MXE_TARGET}-cc
 # sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 # sudo apt-get --yes install mxe-${MXE_TARGET}-boost
-sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
+# sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
 sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
 #sudo apt-get --yes install mxe-${MXE_TARGET}-db
 
@@ -96,11 +96,27 @@ make > /dev/null
 sudo make install
 cd ..
 
+# Download, extract, build miniupnp
+wget http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.tar.gz
+tar zxvf miniupnpc-1.9.tar.gz
+cd miniupnpc-1.9
+
+CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
+AR=$MXE_PATH/usr/bin/${MXE_TARGET1}-ar \
+CFLAGS="-DSTATICLIB -I$MXE_PATH/usr/${MXE_TARGET1}/include" \
+LDFLAGS="-L$MXE_PATH/usr/${MXE_TARGET1}/lib" \
+make libminiupnpc.a
+
+mkdir $MXE_PATH/usr/${MXE_TARGET1}/include/miniupnpc
+cp *.h $MXE_PATH/usr/${MXE_TARGET1}/include/miniupnpc
+cp libminiupnpc.a $MXE_PATH/usr/i686-w64-mingw32.static/lib
+
 # Download, extract, build, install BDB4.8.30
 cd ${TRAVIS_BUILD_DIR}
 wget -N 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 tar zxf db-4.8.30.NC.tar.gz > /dev/null
 cd db-4.8.30.NC
+sed -i "s/WinIoCtl.h/winioctl.h/g" src/dbinc/win_db.h
 mkdir build_mxe
 cd build_mxe
 make clean
@@ -109,7 +125,7 @@ CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
 CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
 AR=$MXE_PATH/usr/bin/${MXE_TARGET1}-ar \
 RANLIB=$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib \
-CFLAGS="-DSTATICLIB -DDLL_EXPORT -DPIC -I$MXE_PATH/usr/bin/${MXE_TARGET1}/include" \
+CFLAGS="-DSTATICLIB -DDLL_EXPORT -DPIC -I$MXE_PATH/usr/${MXE_TARGET1}/include" \
 ../dist/configure \
     --disable-replication \
     --disable-shared \
@@ -148,19 +164,20 @@ cd ${TRAVIS_BUILD_DIR}
 wget -N 'http://fukuchi.org/works/qrencode/qrencode-4.0.2.tar.gz'
 tar xzf qrencode-4.0.2.tar.gz > /dev/null
 cd qrencode-4.0.2
-#make clean
-#LIBS="../libpng-1.6.16/.libs/libpng.a ../../mingw32/${MXE_TARGET1}/lib/libz.a" \
-#png_CFLAGS="-I../libpng-1.6.16" \
-#png_LIBS="-L../libpng-1.6.16/.libs" \
-#CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
-#CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
-#./configure \
-#    --enable-static \
-#    --disable-shared \
-#    --without-tools \
-#    --host=${HOST} \
-#    --prefix=$MXE_PATH/usr/${MXE_TARGET1}
-#make
+make clean
+LIBS="../libpng-1.6.16/.libs/libpng.a ../../mingw32/${MXE_TARGET1}/lib/libz.a" \
+png_CFLAGS="-I../libpng-1.6.16" \
+png_LIBS="-L../libpng-1.6.16/.libs" \
+CC=$MXE_PATH/usr/bin/${MXE_TARGET1}-gcc \
+CXX=$MXE_PATH/usr/bin/${MXE_TARGET1}-g++ \
+./configure \
+    --enable-static \
+    --disable-shared \
+    --without-tools \
+    --host=${HOST} \
+    --prefix=$MXE_PATH/usr/${MXE_TARGET1}
+make > /dev/null 2>&1
+sudo make install > /dev/null 2>&1
 
 # Parallel build, based on our number of CPUs available.
 NCPU=`cat /proc/cpuinfo | grep -c ^processor`
@@ -198,6 +215,8 @@ else
 		BDB_LIB_PATH=$MXE_LIB_PATH \
 		MINIUPNPC_INCLUDE_PATH=$MXE_INCLUDE_PATH \
 		MINIUPNPC_LIB_PATH=$MXE_LIB_PATH \
+		QRENCODE_INCLUDE_PATH=$MXE_INCLUDE_PATH \
+     		QRENCODE_LIB_PATH=$MXE_LIB_PATH \
 		QMAKE_LRELEASE=$MXE_PATH/usr/$MXE_TARGET1/qt5/bin/lrelease Peepcoin-qt.pro
 
 	#make clean
