@@ -17,7 +17,7 @@ matrix:
         brew link qt5 -f; 
         brew install libqrencode; 
         sudo easy_install appscript; 
-        brew install wget;
+        brew upgrade wget;
         wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
         tar xvzf miniupnpc.tar.gz; 
         mv miniupnpc-1.9.20150206 miniupnpc; 
@@ -31,6 +31,7 @@ matrix:
     script: make;
         export QTDIR=/usr/local/Cellar/qt/5.12.3;
         chmod -R 755 contrib;
+        sudo easy_install appscript; 
         echo "Before dmg packaging";
         T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale);
         python2.7 contrib/macdeploy/macdeployqtplus  -add-qt-tr $T -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app;
