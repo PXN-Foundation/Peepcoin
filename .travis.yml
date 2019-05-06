@@ -13,12 +13,12 @@ matrix:
         brew install openssl; 
         brew install boost@1.60; 
         brew link boost@1.60 -f; 
-        wget -O https://raw.githubusercontent.com/Homebrew/homebrew-core/a57d0deab976cd8dee32404abe73f63cc5fbd60d/Formula/qt.rb;
+        brew upgrade wget;
+        wget -O qt5.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/a57d0deab976cd8dee32404abe73f63cc5fbd60d/Formula/qt.rb;
         brew install ./qt5.rb;
         brew link qt5 -f; 
         brew install libqrencode; 
-        sudo easy_install appscript; 
-        brew upgrade wget;
+        sudo easy_install appscript;
         wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
         tar xvzf miniupnpc.tar.gz; 
         mv miniupnpc-1.9.20150206 miniupnpc; 
