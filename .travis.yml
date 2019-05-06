@@ -30,6 +30,7 @@ matrix:
         qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 Peepcoin-qt.pro;
     script: make;
         export QTDIR=/usr/local/Cellar/qt/5.12.3;
+        cd  ${TRAVIS_BUILD_DIR};
         chmod -R 755 contrib;
         sudo easy_install appscript; 
         echo "Before dmg packaging";
@@ -74,6 +75,7 @@ matrix:
     install: cd  ${TRAVIS_BUILD_DIR};
              chmod 755 src/leveldb/build_detect_platform;
     script: cd  ${TRAVIS_BUILD_DIR}/src; 
+        make -f makefile.unix clean;
         make -f makefile.unix RELEASE=1 STATIC=1;
         strip peepcoind;
         tar -czvf peepcoind.tar.gz peepcoind;
@@ -110,6 +112,7 @@ deploy:
     secure: O8nodqyxLFe1UWuY4MK0ApN69PjoakPfVNihmPOtsqkeVdsRhsm3jEH8JdAzL5tmoGUzyPyGDYws6s4ilGeU981CITsJpfzwhGFvphIOJA2/jg+t+IwJ2t/I2JIe19zQ1LkoOHSQV29uZF0d9Nz2uYHl0S4CQFuEQs6B44thWaFWfabDzv+7tgjsoeaipi2jaUMUt4Cen9KmdXm+sgQBeYA10IIXpZE2H/J0wLjI1ppZCf94Y4MkY5ixXYbi9fKXweGD0pEXnwRXA1IqsLy6nLLHzEElvqnvwhdYhGVCGX4r5wsQCBMRQBRFk9R+HYjNlG2r00t6ULjilHdd3GQUUir9AYRQYHoBMnr5cfE4rwrTV8JuGcoMLkQ+4zdqIkACyS6kc5OPp++TfMGt/z6YQPIWWmt5S3AFTKBwP3g9CRbBrOKFNv86kygln1URtrA8U74BuqHmd9CM/vJz0Yul0jqGCmb0O0Pb/FkFPgJMbdr1UL1IAf3NkPkSe1B/ssrkoZjjGHCQ2hg3GCOcllSL7mPtjt2DT7HvbP2oKR1+1dneObMg0RjfBamOPknZjmVxLGdMQMM5VjAQhlDGGW4I6spAYuIKhfYuzKYV9+gcE/W0poGqZV3n3C32Pwy0ETH0ae4LjJj3h+GxLDpJv+o6u6hp1TgV3/NvHMZul3r52cg=
   file: 
       - Peepcoin-Qt.dmg
+      - Peepcoin-Qt.app
       - peepcoin-qt.tar.gz
       - peepcoind.tar.gz
       - release/peepcoin-qt-i686.exe
