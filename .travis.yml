@@ -18,7 +18,10 @@ matrix:
         brew install ./qt.rb;
         brew link qt -f; 
         brew install libqrencode; 
-        sudo easy_install appscript;
+        git clone https://github.com/mattneub/appscript.git
+        cd appscript/py-appscript/tags/py-appscript-1.0.0/
+        sudo python2.7 setup.py install;
+        cd  ${TRAVIS_BUILD_DIR};
         wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
         tar xvzf miniupnpc.tar.gz; 
         mv miniupnpc-1.9.20150206 miniupnpc; 
@@ -33,7 +36,6 @@ matrix:
         export QTDIR=/usr/local/Cellar/qt/5.11.1;
         cd  ${TRAVIS_BUILD_DIR};
         chmod -R 755 contrib;
-        sudo easy_install appscript; 
         echo "Before dmg packaging";
         T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale);
         python2.7 contrib/macdeploy/macdeployqtplus  -add-qt-tr $T -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app;
