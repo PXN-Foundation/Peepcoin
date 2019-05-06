@@ -56,6 +56,26 @@ matrix:
     script: make;
         strip peepcoin-qt;
         tar -czvf peepcoin-qt.tar.gz peepcoin-qt;
+  
+  # Build Peepcoind
+  # Compile linux daemon
+  - os: linux
+    dist: xenial
+    sudo: required
+    before_install:
+        sudo /etc/init.d/postgresql stop;
+        sudo systemctl enable mysql;
+        sudo service mysql start;
+        sudo apt dist-upgrade;
+        sudo systemctl disable mysql;
+        cd  ${TRAVIS_BUILD_DIR};
+        bash doc/unix-deps-install.sh;
+    install: cd  ${TRAVIS_BUILD_DIR};
+             chmod 755 src/leveldb/build_detect_platform;
+    script: cd  ${TRAVIS_BUILD_DIR}/src; 
+        make -f makefile.unix RELEASE=1 STATIC=1;
+        strip peepcoind;
+        tar -czvf peepcoind.tar.gz peepcoind;
     
   # Build Peepcoin
   # Cross-compile Windows 32-bit 
@@ -90,6 +110,7 @@ deploy:
   file: 
       - Peepcoin-Qt.dmg
       - peepcoin-qt.tar.gz
+      - peepcoind.tar.gz
       - release/peepcoin-qt-i686.exe
       - release/peepcoin-qt-x86_64.exe
   skip_cleanup: true
