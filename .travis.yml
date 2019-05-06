@@ -14,9 +14,9 @@ matrix:
         brew install boost@1.60; 
         brew link boost@1.60 -f; 
         brew upgrade wget;
-        wget -O qt5.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/a57d0deab976cd8dee32404abe73f63cc5fbd60d/Formula/qt.rb;
-        brew install ./qt5.rb;
-        brew link qt5 -f; 
+        wget -O qt.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/a57d0deab976cd8dee32404abe73f63cc5fbd60d/Formula/qt.rb;
+        brew install ./qt.rb;
+        brew link qt -f; 
         brew install libqrencode; 
         sudo easy_install appscript;
         wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
