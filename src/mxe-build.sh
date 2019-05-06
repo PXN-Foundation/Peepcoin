@@ -97,7 +97,7 @@ sudo make install
 cd ..
 
 # Download, extract, build miniupnp
-wget http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.tar.gz
+wget -O miniupnpc-1.9.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.tar.gz
 tar zxvf miniupnpc-1.9.tar.gz
 cd miniupnpc-1.9
 
