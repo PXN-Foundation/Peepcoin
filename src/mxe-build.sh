@@ -72,13 +72,13 @@ MXE_LIB_PATH=$MXE_PATH/usr/${MXE_TARGET1}/lib
 #TRAVIS_BUILD_DIR=~/Peepcoin
 
 # Download, extract, build, install boost 1.65.1
-wget https://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.bz2
-tar -xjvf boost_1_58_0.tar.bz2 > /dev/null
-cd boost_1_58_0
+wget https://downloads.sourceforge.net/project/boost/boost/1.63.0/boost_1_63_0.tar.bz2
+tar -xjvf boost_1_63_0.tar.bz2 > /dev/null
+cd boost_1_63_0
 ./bootstrap.sh --without-icu
 echo "using gcc : mxe : $MXE_PATH/usr/bin/${MXE_TARGET1}-g++ : <rc>$MXE_PATH/usr/bin/${MXE_TARGET1}-windres <archiver>$MXE_PATH/usr/bin/${MXE_TARGET1}-ar <ranlib>$MXE_PATH/usr/bin/${MXE_TARGET1}-ranlib ;" > user-config.jam
 export PATH=/usr/lib/mxe/usr/bin:$PATH
-sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=win32 \
+sudo ./b2 toolset=gcc address-model=${ADDRESSMODEL} target-os=windows variant=release threading=multi threadapi=pthread \
 	link=static runtime-link=static --prefix=$MXE_PATH/usr/${MXE_TARGET1} --user-config=user-config.jam \
 	--without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install
 cd ..
@@ -107,9 +107,9 @@ CFLAGS="-DSTATICLIB -I$MXE_PATH/usr/${MXE_TARGET1}/include" \
 LDFLAGS="-L$MXE_PATH/usr/${MXE_TARGET1}/lib" \
 make libminiupnpc.a
 
-mkdir $MXE_PATH/usr/${MXE_TARGET1}/include/miniupnpc
-cp *.h $MXE_PATH/usr/${MXE_TARGET1}/include/miniupnpc
-cp libminiupnpc.a $MXE_PATH/usr/i686-w64-mingw32.static/lib
+sudo mkdir $MXE_PATH/usr/${MXE_TARGET1}/include/miniupnpc
+sudo cp *.h $MXE_PATH/usr/${MXE_TARGET1}/include/miniupnpc
+sudo cp libminiupnpc.a $MXE_PATH/usr/i686-w64-mingw32.static/lib
 
 # Download, extract, build, install BDB4.8.30
 cd ${TRAVIS_BUILD_DIR}
