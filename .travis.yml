@@ -18,8 +18,8 @@ matrix:
         brew install ./qt.rb;
         brew link qt -f; 
         brew install libqrencode; 
-        git clone https://github.com/mattneub/appscript.git
-        cd appscript/py-appscript/tags/py-appscript-1.0.0/
+        git clone https://github.com/mattneub/appscript.git;
+        cd appscript/py-appscript/tags/py-appscript-1.0.0/;
         sudo python2.7 setup.py install;
         cd  ${TRAVIS_BUILD_DIR};
         wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
@@ -94,6 +94,8 @@ matrix:
         sudo service mysql start;
         sudo apt dist-upgrade;
         sudo systemctl disable mysql;
+        sudo apt-get install p7zip-full autoconf automake autopoint bash bison bzip2 cmake flex gettext git g++ gperf intltool libffi-dev libtool libltdl-dev libssl-dev libxml-parser-perl make openssl patch perl pkg-config python ruby scons sed unzip wget xz-utils -y;
+        sudo apt-get install libtool-bin -y;
     script: bash src/mxe-build.sh windows32-qt;
 
   # Build Peepcoin
@@ -107,6 +109,9 @@ matrix:
         sudo service mysql start;
         sudo apt dist-upgrade;
         sudo systemctl disable mysql;
+        sudo apt-get install p7zip-full autoconf automake autopoint bash bison bzip2 cmake flex gettext git g++ gperf intltool libffi-dev libtool libltdl-dev libssl-dev libxml-parser-perl make openssl patch perl pkg-config python ruby scons sed unzip wget xz-utils -y;
+        sudo apt-get install libtool-bin -y;
+        sudo apt-get install g++-multilib libc6-dev-i386 -y;
     script: bash src/mxe-build.sh windows64-qt;
 
 deploy:
