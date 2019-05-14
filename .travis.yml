@@ -1,74 +1,132 @@
 language: cpp
 sudo: required
-dist: trusty
-os:
-- linux
-- osx
+    
+matrix:
+  include:
+  # Build Peepcoin-qt MAC
+  # OS X 10.13 (High Sierra)
+  - os: osx
+    sudo: required
+    before_install:
+        brew install git; 
+        brew install berkeley-db4;
+        brew install openssl; 
+        brew install boost@1.60; 
+        brew link boost@1.60 -f; 
+        brew upgrade wget;
+        wget -O qt.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/a57d0deab976cd8dee32404abe73f63cc5fbd60d/Formula/qt.rb;
+        brew install ./qt.rb;
+        brew link qt -f; 
+        brew install libqrencode; 
+        git clone https://github.com/mattneub/appscript.git;
+        cd appscript/py-appscript/tags/py-appscript-1.0.0/;
+        sudo python2.7 setup.py install;
+        cd  ${TRAVIS_BUILD_DIR};
+        wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
+        tar xvzf miniupnpc.tar.gz; 
+        mv miniupnpc-1.9.20150206 miniupnpc; 
+        cd miniupnpc; 
+        make -f Makefile upnpc-static; 
+        sudo INSTALLPREFIX=/usr/local make install; 
+    install: 
+        cd  ${TRAVIS_BUILD_DIR};
+        chmod 755 src/leveldb/build_detect_platform;
+        qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 Peepcoin-qt.pro;
+    script: make;
+        export QTDIR=/usr/local/Cellar/qt/5.11.1;
+        cd  ${TRAVIS_BUILD_DIR};
+        chmod -R 755 contrib;
+        echo "Before dmg packaging";
+        T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale);
+        python2.7 contrib/macdeploy/macdeployqtplus  -add-qt-tr $T -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app;
+        ls -ltr;
+        echo "DMG file";
+  
+  # Build Peepcoin-qt
+  # Compile linux gui
+  - os: linux
+    dist: xenial
+    sudo: required
+    before_install:
+        sudo /etc/init.d/postgresql stop;
+        sudo systemctl enable mysql;
+        sudo service mysql start;
+        sudo apt dist-upgrade;
+        sudo systemctl disable mysql;
+        cd  ${TRAVIS_BUILD_DIR};
+        bash doc/unix-deps-install.sh;
+    install: cd  ${TRAVIS_BUILD_DIR};
+             chmod 755 src/leveldb/build_detect_platform;
+             qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 Peepcoin-qt.pro;
+    script: make;
+        strip peepcoin-qt;
+        tar -czvf peepcoin-qt.tar.gz peepcoin-qt;
+  
+  # Build Peepcoind
+  # Compile linux daemon
+  - os: linux
+    dist: xenial
+    sudo: required
+    before_install:
+        sudo /etc/init.d/postgresql stop;
+        sudo systemctl enable mysql;
+        sudo service mysql start;
+        sudo apt dist-upgrade;
+        sudo systemctl disable mysql;
+        cd  ${TRAVIS_BUILD_DIR};
+        bash doc/unix-deps-install.sh;
+    install: cd  ${TRAVIS_BUILD_DIR};
+             chmod 755 src/leveldb/build_detect_platform;
+    script: cd  ${TRAVIS_BUILD_DIR}/src; 
+        make -f makefile.unix clean;
+        make -f makefile.unix RELEASE=1 STATIC=1;
+        strip peepcoind;
+        tar -czvf peepcoind.tar.gz peepcoind;
+    
+  # Build Peepcoin
+  # Cross-compile Windows 32-bit 
+  - os: linux
+    dist: xenial
+    sudo: required
+    before_install:
+        sudo /etc/init.d/postgresql stop;
+        sudo systemctl enable mysql;
+        sudo service mysql start;
+        sudo apt dist-upgrade;
+        sudo systemctl disable mysql;
+        sudo apt-get install p7zip-full autoconf automake autopoint bash bison bzip2 cmake flex gettext git g++ gperf intltool libffi-dev libtool libltdl-dev libssl-dev libxml-parser-perl make openssl patch perl pkg-config python ruby scons sed unzip wget xz-utils -y;
+        sudo apt-get install libtool-bin -y;
+    script: bash src/mxe-build.sh windows32-qt;
 
-before_install:
-- if [[ $TRAVIS_OS_NAME == osx ]]; then 
-     brew install git; 
-     brew install berkeley-db4;
-     brew install openssl; 
-     brew install boost@1.60; 
-     brew link boost@1.60 -force; 
-     brew install qt5; 
-     brew link qt5 -force; 
-     brew install libqrencode; 
-     sudo easy_install appscript; 
-     brew install wget;
-     wget -O miniupnpc.tar.gz http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20150206.tar.gz;
-     tar xvzf miniupnpc.tar.gz; 
-     mv miniupnpc-1.9.20150206 miniupnpc; 
-     cd miniupnpc; 
-     make -f Makefile upnpc-static; 
-     sudo INSTALLPREFIX=/usr/local make install; 
-     fi
-- if [[ $TRAVIS_OS_NAME == linux ]]; then 
-     sudo /etc/init.d/postgresql stop;
-     cd  ${TRAVIS_BUILD_DIR};
-     bash doc/unix-deps-install.sh;
-     sudo apt-get update;
-     fi
-
-install:
-- ls -ltr
-- cd  ${TRAVIS_BUILD_DIR}
-- chmod 755 src/leveldb/build_detect_platform
-- qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 Peepcoin-qt.pro
-
-script:
-- make
-- if [[ $TRAVIS_OS_NAME == linux ]]; then 
-     bash src/mxe-build.sh windows32-qt;
-     bash src/mxe-build.sh windows64-qt;
-  fi
-before_deploy:
-- if [[ $TRAVIS_OS_NAME == linux ]]; then 
-  strip peepcoin-qt;
-  tar -czvf peepcoin-qt.tar.gz peepcoin-qt;
-  fi
-- if [[ $TRAVIS_OS_NAME == osx ]]; then 
-  export QTDIR=/usr/local/Cellar/qt/5.11.1;
-  chmod -R 755 contrib;
-  echo "Before dmg packaging";
-  T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale);
-  python2.7 contrib/macdeploy/macdeployqtplus  -add-qt-tr $T -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app;
-  ls -ltr;
-  echo "DMG file";
-  fi
+  # Build Peepcoin
+  # Cross-compile Windows 64-bit 
+  - os: linux
+    dist: xenial
+    sudo: required
+    before_install:
+        sudo /etc/init.d/postgresql stop;
+        sudo systemctl enable mysql;
+        sudo service mysql start;
+        sudo apt dist-upgrade;
+        sudo systemctl disable mysql;
+        sudo apt-get install p7zip-full autoconf automake autopoint bash bison bzip2 cmake flex gettext git g++ gperf intltool libffi-dev libtool libltdl-dev libssl-dev libxml-parser-perl make openssl patch perl pkg-config python ruby scons sed unzip wget xz-utils -y;
+        sudo apt-get install libtool-bin -y;
+        sudo apt-get install g++-multilib libc6-dev-i386 -y;
+    script: bash src/mxe-build.sh windows64-qt;
 
 deploy:
   provider: releases
   api_key:
-    secure: bH32eYUAT4URcrRZ32boAbLYQ7U9WC2Fh2CDZt57UFFcHPugx0dX5QOdKPJe6tQwIsofOwsRjwrcKypyhALAFRVhxUzsfK+I8y+6+H7GR5rBMD2wA85L67TAIFmmRYnGvjuusRrW2xZLIlyN9k0mHnG+uy2QnnKW/Do5myPxhMbEb9Il7q1eF9YwGprXxd7y/qAXRxDMAqpDIMewviQLU4FONFS7bUzHvgY7wWpTxLK5FCGIsK6SHlc68f1BYRSOdEkVUi6nZ9+8jdrGsmvc55+qritT6qS1GoHSGINJHUb+GdXmxfhAA1TXHSgy84OWHDUnnTCre62VBlA00ZvF4Aih/rQVwfPWzUrO27AjRpJh49lah9FzVwnAoRYr/UyOKDcHXQA6WzzX4BplP4Ymt5art0wEE3e6YpJ3B7JOtOKLJw5WDlIdpBCO16Z3vV8F+Yq5CDhPlJ7Z+FMW/7fmQDWp22RjDGMg7gxwPOV8G6wSgu1Ft4fINIgIblEpiZV1jE19QqwHR0ZinRs1gcXu/UcZmUZL+yvoRJZMRWqBEtguzSoBRE4reo960otSUP2pJaYptAzoPeW1R+cHk4Aoxwb3qBj4vHMOLQFXllC8qvt+4zx9fCO7tX44u7qo56sKej0U3p64FN2F6rp7o+yWZtlZbZaL7shnW4gWoXpEqhE=
+    secure: O8nodqyxLFe1UWuY4MK0ApN69PjoakPfVNihmPOtsqkeVdsRhsm3jEH8JdAzL5tmoGUzyPyGDYws6s4ilGeU981CITsJpfzwhGFvphIOJA2/jg+t+IwJ2t/I2JIe19zQ1LkoOHSQV29uZF0d9Nz2uYHl0S4CQFuEQs6B44thWaFWfabDzv+7tgjsoeaipi2jaUMUt4Cen9KmdXm+sgQBeYA10IIXpZE2H/J0wLjI1ppZCf94Y4MkY5ixXYbi9fKXweGD0pEXnwRXA1IqsLy6nLLHzEElvqnvwhdYhGVCGX4r5wsQCBMRQBRFk9R+HYjNlG2r00t6ULjilHdd3GQUUir9AYRQYHoBMnr5cfE4rwrTV8JuGcoMLkQ+4zdqIkACyS6kc5OPp++TfMGt/z6YQPIWWmt5S3AFTKBwP3g9CRbBrOKFNv86kygln1URtrA8U74BuqHmd9CM/vJz0Yul0jqGCmb0O0Pb/FkFPgJMbdr1UL1IAf3NkPkSe1B/ssrkoZjjGHCQ2hg3GCOcllSL7mPtjt2DT7HvbP2oKR1+1dneObMg0RjfBamOPknZjmVxLGdMQMM5VjAQhlDGGW4I6spAYuIKhfYuzKYV9+gcE/W0poGqZV3n3C32Pwy0ETH0ae4LjJj3h+GxLDpJv+o6u6hp1TgV3/NvHMZul3r52cg=
   file: 
       - Peepcoin-Qt.dmg
+      - Peepcoin-Qt.app
       - peepcoin-qt.tar.gz
+      - peepcoind.tar.gz
       - release/peepcoin-qt-i686.exe
       - release/peepcoin-qt-x86_64.exe
   skip_cleanup: true
   on:
     repo: PXN-Foundation/Peepcoin
     tags: true
-    branch: Temp
+    branch: QA

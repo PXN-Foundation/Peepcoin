@@ -2891,6 +2891,15 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             vRecv >> addrFrom >> nNonce;
         if (!vRecv.empty())
             vRecv >> pfrom->strSubVer;
+
+        if (!((pfrom->strSubVer == "/Satoshi:1.0.4/") || (pfrom->strSubVer == "/PXN:1.0.4.1/")))
+        {
+            // disconnect from peers other than these sub versions
+            printf("partner %s using obsolete version %s; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->strSubVer.c_str());
+            pfrom->fDisconnect = true;
+            return false;
+        }
+
         if (!vRecv.empty())
             vRecv >> pfrom->nStartingHeight;
 

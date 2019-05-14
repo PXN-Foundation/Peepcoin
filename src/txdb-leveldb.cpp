@@ -22,6 +22,7 @@
 
 using namespace std;
 using namespace boost;
+using namespace leveldb;
 
 leveldb::DB *txdb; // global pointer for LevelDB object instance
 

@@ -1,41 +1,44 @@
 TEMPLATE = app
 TARGET = peepcoin-qt
-VERSION = 1.0.4.0
+VERSION = 1.0.4.1
 INCLUDEPATH += src src/json src/qt
 QT += core gui network printsupport
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE USE_IPV6 BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
-DEFINES += STATIC
-DEFINES += QT_STATIC_BUILD
+#DEFINES += STATIC
+#DEFINES += QT_STATIC_BUILD
 CONFIG += no_include_pwd
 CONFIG += thread
-CONFIG += static
+#CONFIG += static
 QMAKE_CXXFLAGS = -fpermissive
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
     DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 }
 
-win32 {
-windows:LIBS += -lshlwapi
-LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
-LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
-windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
-LIBS += -lboost_system-mt -lboost_filesystem-mt -lboost_program_options-mt -lboost_thread_win32-mt
-BOOST_LIB_SUFFIX=-mt
-BOOST_THREAD_LIB_SUFFIX=_win32-mt
-BOOST_INCLUDE_PATH=C:/deps/boost_1_64_0
-BOOST_LIB_PATH=C:/deps/boost_1_64_0/stage/lib
-BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
-BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
-OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.2n/include
-OPENSSL_LIB_PATH=C:/deps/openssl-1.0.2n
-MINIUPNPC_INCLUDE_PATH=C:/deps/
-MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
-LIBPNG_INCLUDE_PATH=C:/deps/libpng-1.6.16
-LIBPNG_LIB_PATH=C:/deps/libpng-1.6.16/.libs
-QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.4
-QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
-} 
+# win32 {
+# windows:LIBS += -lshlwapi
+# LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
+# LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
+# windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
+# LIBS += -lboost_system-mt -lboost_filesystem-mt -lboost_program_options-mt -lboost_thread_-mt
+#LIBS += -lboost_system-mgw73-mt-s-1_64 -lboost_filesystem-mgw73-mt-s-1_64 -lboost_program_options-mgw73-mt-s-1_64 -lboost_thread-mgw73-mt-s-1_64
+# BOOST_LIB_SUFFIX=-mt
+#BOOST_LIB_SUFFIX=-mgw73-mt-s-1_64
+#BOOST_THREAD_LIB_SUFFIX=_win32-mt
+#BOOST_THREAD_LIB_SUFFIX=-mgw73-mt-s-1_64
+#BOOST_INCLUDE_PATH=C:/deps/boost_1_64_0
+#BOOST_LIB_PATH=C:/deps/boost_1_64_0/stage/lib
+#BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
+#BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
+#MINIUPNPC_INCLUDE_PATH=C:/deps
+#MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
+#LIBPNG_INCLUDE_PATH=C:/deps/libpng-1.6.16
+#LIBPNG_LIB_PATH=C:/deps/libpng-1.6.16/.libs
+#QRENCODE_INCLUDE_PATH=C:/deps/qrencode-4.0.2
+#QRENCODE_LIB_PATH=C:/deps/qrencode-4.0.2/.libs
+#OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.2n/include
+#OPENSSL_LIB_PATH=C:/deps/openssl-1.0.2n
+#} 
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
 # for boost thread win32 with _win32 sufix
@@ -96,7 +99,7 @@ contains(USE_UPNP, -) {
     count(USE_UPNP, 0) {
         USE_UPNP=1
     }
-    DEFINES += USE_UPNP=$$USE_UPNP STATICLIB
+    DEFINES += USE_UPNP=$$USE_UPNP STATICLIB MINIUPNP_STATICLIB
     INCLUDEPATH += $$MINIUPNPC_INCLUDE_PATH
     LIBS += $$join(MINIUPNPC_LIB_PATH,,-L,) -lminiupnpc
     win32:LIBS += -liphlpapi
@@ -398,7 +401,7 @@ OTHER_FILES += \
 # platform specific defaults, if not overridden on command line
 isEmpty(BOOST_LIB_SUFFIX) {
     macx:BOOST_LIB_SUFFIX = -mt
-    windows:BOOST_LIB_SUFFIX = -mgw49-mt-s-1_57
+    windows:BOOST_LIB_SUFFIX = -mt
 }
 
 isEmpty(BOOST_THREAD_LIB_SUFFIX) {
@@ -501,3 +504,6 @@ contains(RELEASE, 1) {
 }
 
 system($$QMAKE_LRELEASE -silent $$_PRO_FILE_)
+
+DISTFILES += \
+    src/makefile.mingw
