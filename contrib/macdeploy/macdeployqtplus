@@ -592,7 +592,7 @@ if len(config.add_qt_tr) == 0:
     add_qt_tr = []
 else:
     qt_tr_dir = os.path.join(deploymentInfo.qtPath, "translations")
-    add_qt_tr = ["bitcoin_%s.qm" % lng for lng in config.add_qt_tr[0].split(",")]
+    add_qt_tr = ["qt_%s.qm" % lng for lng in config.add_qt_tr[0].split(",")]
     for lng_file in add_qt_tr:
         p = os.path.join(qt_tr_dir, lng_file)
         if verbose >= 3:
