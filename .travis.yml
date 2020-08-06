@@ -132,4 +132,4 @@ deploy:
   on:
     repo: PXN-Foundation/Peepcoin
     tags: true
-    branch: 1.0.5.1
+    branch: master
