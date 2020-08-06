@@ -111,12 +111,11 @@ private:
     QAction *lockWalletAction;
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
-	QAction *bleuBTCAction;
-	QAction *bleuDOGEAction;
-	QAction *bleuETHAction;
-	QAction *bleuUSDTAction;
-	QAction *tradeOgreAction;
+    
+	QAction *tradeOgreBTCAction;
+	QAction *tradeOgreLTCAction;
 	QAction *cpatexBTCAction;
+	QAction *cpatexLTCAction;
 	QAction *cpatexDOGEAction;
 	QAction *otherExchangesAction;
 	QAction *facebookAction;
@@ -206,12 +205,11 @@ private slots:
 	void faq3Clicked();
 	void swapClicked();
 	void whitepaperClicked();
-	void bleuBTCClicked();
-	void bleuDOGEClicked();
-	void bleuETHClicked();
-	void bleuUSDTClicked();
-	void tradeOgreClicked();
+
+	void tradeOgreBTCClicked();
+	void tradeOgreLTCClicked();
 	void cpatexBTCClicked();
+	void cpatexLTCClicked();
 	void cpatexDOGEClicked();
 	void otherExchangesClicked();
 	void facebookActionClicked();

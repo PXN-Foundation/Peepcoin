@@ -60,7 +60,7 @@ sudo apt-get update
 sudo apt-get --yes install mxe-${MXE_TARGET}-cc
 # sudo apt-get --yes install mxe-${MXE_TARGET}-openssl
 # sudo apt-get --yes install mxe-${MXE_TARGET}-boost
-# sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
+sudo apt-get --yes install mxe-${MXE_TARGET}-miniupnpc
 sudo apt-get --yes install mxe-${MXE_TARGET}-qttools
 #sudo apt-get --yes install mxe-${MXE_TARGET}-db
 

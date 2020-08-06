@@ -328,18 +328,14 @@ void BitcoinGUI::createActions()
     signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
     verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
 	
-	bleuBTCAction = new QAction(QIcon(":/icons/bleutrade"), tr("&Bleutrade - PCN/BTC"), this);
-    bleuBTCAction->setToolTip(tr("Buy Peepcoin with BTC on Bleutrade"));
-	bleuDOGEAction = new QAction(QIcon(":/icons/bleutrade"), tr("&Bleutrade - PCN/DOGE"), this);
-    bleuDOGEAction->setToolTip(tr("Buy Peepcoin with DOGE on Bleutrade"));
-	bleuETHAction = new QAction(QIcon(":/icons/bleutrade"), tr("&Bleutrade - PCN/ETH"), this);
-	bleuETHAction->setToolTip(tr("Buy Peepcoin with ETH on Bleutrade"));
-    bleuUSDTAction = new QAction(QIcon(":/icons/bleutrade"), tr("&Bleutrade - PCN/USDT"), this);
-    bleuUSDTAction->setToolTip(tr("Buy Peepcoin with USDT on Bleutrade"));
-	tradeOgreAction = new QAction(QIcon(":/icons/tradeogre"), tr("&TradeOgre - PCN/BTC"), this);
-    tradeOgreAction->setToolTip(tr("Buy Peepcoin for BTC on TradeOgre"));
+	tradeOgreBTCAction = new QAction(QIcon(":/icons/tradeogre"), tr("&TradeOgre - PCN/BTC"), this);
+    tradeOgreBTCAction->setToolTip(tr("Buy Peepcoin for BTC on TradeOgre"));
+	tradeOgreLTCAction = new QAction(QIcon(":/icons/tradeogre"), tr("&TradeOgre - PCN/LTC"), this);
+    tradeOgreLTCAction->setToolTip(tr("Buy Peepcoin for LTC on TradeOgre"));
 	cpatexBTCAction = new QAction(QIcon(":/icons/cpatex"), tr("&C-Patex - PCN/BTC"), this);
     cpatexBTCAction->setToolTip(tr("Buy Peepcoin for BTC on C-Patex"));
+	cpatexLTCAction = new QAction(QIcon(":/icons/cpatex"), tr("&C-Patex - PCN/BTC"), this);
+    cpatexLTCAction->setToolTip(tr("Buy Peepcoin for LTC on C-Patex"));
 	cpatexDOGEAction = new QAction(QIcon(":/icons/cpatex"), tr("&C-Patex - PCN/DOGE"), this);
 	cpatexDOGEAction->setToolTip(tr("Buy Peepcoin for DOGE on C-Patex"));
 	cryptopiaAction = new QAction(QIcon(":/icons/cryptopia"), tr("Cryptopia - Coming Soon"), this);
@@ -396,14 +392,13 @@ void BitcoinGUI::createActions()
     connect(signMessageAction, SIGNAL(triggered()), this, SLOT(gotoSignMessageTab()));
     connect(verifyMessageAction, SIGNAL(triggered()), this, SLOT(gotoVerifyMessageTab()));
 	
-	connect(bleuBTCAction, SIGNAL(triggered()), this, SLOT(bleuBTCClicked()));
-	connect(bleuDOGEAction, SIGNAL(triggered()), this, SLOT(bleuDOGEClicked()));
-    connect(bleuETHAction, SIGNAL(triggered()), this, SLOT(bleuETHClicked()));
-	connect(bleuUSDTAction, SIGNAL(triggered()), this, SLOT(bleuUSDTClicked()));
-	connect(tradeOgreAction, SIGNAL(triggered()), this, SLOT(tradeOgreClicked()));
+	connect(tradeOgreBTCAction, SIGNAL(triggered()), this, SLOT(tradeOgreBTCClicked()));
+	connect(tradeOgreLTCAction, SIGNAL(triggered()), this, SLOT(tradeOgreLTCClicked()));
 	connect(cpatexBTCAction, SIGNAL(triggered()), this, SLOT(cpatexBTCClicked()));
+	connect(cpatexLTCAction, SIGNAL(triggered()), this, SLOT(cpatexLTCClicked()));
 	connect(cpatexDOGEAction, SIGNAL(triggered()), this, SLOT(cpatexDOGEClicked()));
-	connect(otherExchangesAction, SIGNAL(triggered()), this, SLOT(otherExchangesClicked()));
+	
+    connect(otherExchangesAction, SIGNAL(triggered()), this, SLOT(otherExchangesClicked()));
 
 	connect(facebookAction, SIGNAL(triggered()), this, SLOT(facebookActionClicked()));
 	connect(twitterAction, SIGNAL(triggered()), this, SLOT(twitterActionClicked()));
@@ -446,16 +441,14 @@ void BitcoinGUI::createMenuBar()
     settings->addSeparator();
     settings->addAction(optionsAction);
 
-	QMenu *exchanges = appMenuBar->addMenu(tr("Exchanges"));
-	exchanges->addAction(bleuBTCAction);
-	exchanges->addAction(bleuDOGEAction);
-	exchanges->addAction(bleuETHAction);
-	exchanges->addAction(bleuUSDTAction);	
+	QMenu *exchanges = appMenuBar->addMenu(tr("Exchanges"));	
 	exchanges->addSeparator();
-	exchanges->addAction(tradeOgreAction);
-    exchanges->addSeparator();
-    exchanges->addAction(cpatexBTCAction);
-    exchanges->addAction(cpatexDOGEAction);
+	exchanges->addAction(tradeOgreBTCAction);
+	exchanges->addAction(tradeOgreLTCAction);
+    	exchanges->addSeparator();
+    	exchanges->addAction(cpatexBTCAction);
+	exchanges->addAction(cpatexLTCAction);
+    	exchanges->addAction(cpatexDOGEAction);
 	exchanges->addSeparator();
 	exchanges->addAction(otherExchangesAction);
     /*
@@ -678,29 +671,14 @@ void BitcoinGUI::whitepaperClicked()
 	QDesktopServices::openUrl(QUrl("https://dapscoin.com/whitepaper.pdf"));
 }
 
-void BitcoinGUI::bleuBTCClicked()
-{
-	QDesktopServices::openUrl(QUrl("https://bleutrade.com/exchange/PCN/BTC"));
-}
-
-void BitcoinGUI::bleuDOGEClicked()
-{
-	QDesktopServices::openUrl(QUrl("https://bleutrade.com/exchange/PCN/DOGE"));
-}
-
-void BitcoinGUI::bleuETHClicked()
-{
-	QDesktopServices::openUrl(QUrl("https://bleutrade.com/exchange/PCN/ETH"));
-}
-
-void BitcoinGUI::bleuUSDTClicked()
-{
-	QDesktopServices::openUrl(QUrl("https://bleutrade.com/exchange/PCN/USDT"));
-}
-
-void BitcoinGUI::tradeOgreClicked()
+void BitcoinGUI::tradeOgreBTCClicked()
 {
 	QDesktopServices::openUrl(QUrl("https://tradeogre.com/exchange/BTC-PCN"));
+}
+
+void BitcoinGUI::tradeOgreLTCClicked()
+{
+	QDesktopServices::openUrl(QUrl("https://tradeogre.com/exchange/LTC-PCN"));
 }
 
 void BitcoinGUI::cpatexBTCClicked()
@@ -711,6 +689,11 @@ void BitcoinGUI::cpatexBTCClicked()
 void BitcoinGUI::cpatexDOGEClicked()
 {
 	QDesktopServices::openUrl(QUrl("https://c-patex.com/markets/pcndoge"));
+}
+
+void BitcoinGUI::cpatexLTCClicked()
+{
+	QDesktopServices::openUrl(QUrl("https://c-patex.com/markets/pcnltc"));
 }
 
 void BitcoinGUI::otherExchangesClicked()

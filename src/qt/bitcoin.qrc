@@ -53,6 +53,8 @@
 		<file alias="twitter">res/icons/twitter.png</file>
 		<file alias="discord">res/icons/discord.png</file>
 		<file alias="bleutrade">res/icons/bleutrade.png</file>
+        <file alias="crex24">res/icons/crex24.png</file>
+        <file alias="tradesatoshi">res/icons/tradesatoshi.png</file>
 		<file alias="tradeogre">res/icons/tradeogre.png</file>
 		<file alias="cryptohub">res/icons/cryptohub.png</file>
 		<file alias="cpatex">res/icons/cpatex.png</file>
@@ -61,7 +63,7 @@
     </qresource>
     <qresource prefix="/images">
         <file alias="about">res/images/about.png</file>
-        <file alias="splash">res/images/splash3.png</file>
+        <file alias="splash">res/images/splash4.png</file>
         <file alias="bkg">res/images/bkg.png</file>
         <file alias="bkg2">res/images/bkg2.png</file>
         <file alias="2b">res/images/2b.png</file>

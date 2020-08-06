@@ -10,10 +10,14 @@ matrix:
     before_install:
         brew install git; 
         brew install berkeley-db4;
-        brew install openssl; 
         brew install boost@1.60; 
         brew link boost@1.60 -f; 
         brew upgrade wget;
+        wget -O openssl.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/75b573845a17aaf3f7c84dc58e97cf5fe39a502b/Formula/openssl.rb;
+        brew install ./openssl.rb;
+        wget -O protobuf.rb https://gist.githubusercontent.com/shlima/b64087606b2f7c9495fcb0bcb886b5be/raw/265e879f7971f80b4543f34179edaaaac3c08413/protobuf260.rb;
+        brew install ./protobuf.rb;
+        brew link protobuf -f;
         wget -O qt.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/a57d0deab976cd8dee32404abe73f63cc5fbd60d/Formula/qt.rb;
         brew install ./qt.rb;
         brew link qt -f; 
@@ -37,8 +41,7 @@ matrix:
         cd  ${TRAVIS_BUILD_DIR};
         chmod -R 755 contrib;
         echo "Before dmg packaging";
-        T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale);
-        python2.7 contrib/macdeploy/macdeployqtplus  -add-qt-tr $T -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app;
+        python2.7 contrib/macdeploy/macdeployqtplus -dmg -fancy contrib/macdeploy/fancy.plist Peepcoin-Qt.app  -add-qt-tr en;
         ls -ltr;
         echo "DMG file";
   
@@ -129,4 +132,4 @@ deploy:
   on:
     repo: PXN-Foundation/Peepcoin
     tags: true
-    branch: QA
+    branch: 1.0.5.1
