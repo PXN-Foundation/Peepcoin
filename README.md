@@ -16,7 +16,7 @@ Peepcoin is a free open source project derived from Bitcoin, with the goal of pr
 | Port | `8193` |
 | RPC Port | `8194` |
 
-## Expolorer:
+## Explorer:
 https://chainz.cryptoid.info/pcn/
 
 ## Build
