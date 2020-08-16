@@ -9,7 +9,7 @@
 #define CLIENT_VERSION_MAJOR       1
 #define CLIENT_VERSION_MINOR       0
 #define CLIENT_VERSION_REVISION    5
-#define CLIENT_VERSION_BUILD       1
+#define CLIENT_VERSION_BUILD       2
 
 //Windows has trouble inserting a Build Date, let's set one
 #ifdef WIN32

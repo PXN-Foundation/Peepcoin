@@ -2883,12 +2883,27 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64_t nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
-        if (pfrom->nVersion < MIN_PEER_PROTO_VERSION)
-        {
-            // disconnect from peers older than this proto version
-            printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
-            pfrom->fDisconnect = true;
-            return false;
+
+        //Allow various protocols before new fork height
+        if(pfrom->nStartingHeight >= 2422000)
+        {    
+            if (pfrom->nVersion < MIN_PEER_PROTO_VERSION)
+            {
+                // disconnect from peers older than this proto version
+                printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+                pfrom->fDisconnect = true;
+                return false;
+            }
+        } else {
+            static const int MIN_PEER_PROTO_VERSION_2 = 60014;
+        
+            if (pfrom->nVersion < MIN_PEER_PROTO_VERSION_2)
+            {
+                // disconnect from peers older than this proto version
+                printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+                pfrom->fDisconnect = true;
+                return false;
+            }
         }
 
         if (pfrom->nVersion == 10300)
@@ -2897,17 +2912,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             vRecv >> addrFrom >> nNonce;
         if (!vRecv.empty())
             vRecv >> pfrom->strSubVer;
-        // Subversion check and disconnect older peers
-         if (((pfrom->strSubVer == "/Satoshi:1.0.4.0/") || 
-		(pfrom->strSubVer == "/PXN:1.0.4.1/") || 
-                (pfrom->strSubVer == "/PXN:1.0.5.0/")) && pfrom->nStartingHeight >= 2422000)
-         {
-             // disconnect from peers other than these sub versions after fork
-             printf("partner %s using obsolete version %s; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->strSubVer.c_str());
-             pfrom->fDisconnect = true;
-             return false;
-         }
-
         if (!vRecv.empty())
             vRecv >> pfrom->nStartingHeight;
 
