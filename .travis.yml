@@ -131,5 +131,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: PXN-Foundation/Peepcoin
-    tags: false
-    branch: 1.0.5.2
+    tags: true
+    branch: master
