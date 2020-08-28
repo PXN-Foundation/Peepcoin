@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = peepcoin-qt
-VERSION = 1.0.5.1
+VERSION = 1.0.5.2
 INCLUDEPATH += src src/json src/qt
 QT += core gui network printsupport
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE USE_IPV6 BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
@@ -38,7 +38,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 #QRENCODE_LIB_PATH=C:/deps/qrencode-4.0.2/.libs
 #OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.2n/include
 #OPENSSL_LIB_PATH=C:/deps/openssl-1.0.2n
-#} 
+#}
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
 # for boost thread win32 with _win32 sufix

@@ -2884,9 +2884,18 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         uint64_t nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
 
+        if (pfrom->nVersion == 10300)
+            pfrom->nVersion = 300;
+        if (!vRecv.empty())
+            vRecv >> addrFrom >> nNonce;
+        if (!vRecv.empty())
+            vRecv >> pfrom->strSubVer;
+        if (!vRecv.empty())
+            vRecv >> pfrom->nStartingHeight;
+
         //Allow various protocols before new fork height
         if(pfrom->nStartingHeight >= 2422000)
-        {    
+        {
             if (pfrom->nVersion < MIN_PEER_PROTO_VERSION)
             {
                 // disconnect from peers older than this proto version
@@ -2896,7 +2905,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             }
         } else {
             static const int MIN_PEER_PROTO_VERSION_2 = 60014;
-        
+
             if (pfrom->nVersion < MIN_PEER_PROTO_VERSION_2)
             {
                 // disconnect from peers older than this proto version
@@ -2905,15 +2914,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                 return false;
             }
         }
-
-        if (pfrom->nVersion == 10300)
-            pfrom->nVersion = 300;
-        if (!vRecv.empty())
-            vRecv >> addrFrom >> nNonce;
-        if (!vRecv.empty())
-            vRecv >> pfrom->strSubVer;
-        if (!vRecv.empty())
-            vRecv >> pfrom->nStartingHeight;
 
         if (pfrom->fInbound && addrMe.IsRoutable())
         {
