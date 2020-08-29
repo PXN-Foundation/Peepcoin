@@ -300,8 +300,8 @@ void BitcoinGUI::createActions()
     faq2Action->setToolTip(tr("Peepcoin Staking FAQ"));
 	faq3Action = new QAction(QIcon(":/icons/bitcoin"), tr("&General FAQ"), this);
     faq3Action->setToolTip(tr("Peepcoin General FAQ"));
-	whitepaperAction = new QAction(QIcon(":/icons/bitcoin"), tr("&DAPS Whitepaper"), this);
-    whitepaperAction->setToolTip(tr("DAPS Whitepaper"));
+    whitepaperAction = new QAction(QIcon(":/icons/bitcoin"), tr("&Peepcoin Whitepaper"), this);
+    whitepaperAction->setToolTip(tr("Peepcoin Whitepaper"));
 	swapAction = new QAction(QIcon(":/icons/bitcoin"), tr("&Swap Info"), this);
     swapAction->setToolTip(tr("Swap Info"));
     aboutAction = new QAction(QIcon(":/icons/bitcoin"), tr("&About Peepcoin"), this);
@@ -346,27 +346,27 @@ void BitcoinGUI::createActions()
 	otherExchangesAction->setToolTip(tr("Other Exchanges currently listing PeepCoin"));
 
 	facebookAction = new QAction(QIcon(":/icons/facebook"), tr("Facebook"), this);
-    facebookAction->setToolTip(tr("DAPS Facebook"));
+    facebookAction->setToolTip(tr("Peepcoin Facebook"));
 	twitterAction = new QAction(QIcon(":/icons/twitter"), tr("Twitter"), this);
-    twitterAction->setToolTip(tr("DAPS Twitter"));
+    twitterAction->setToolTip(tr("Peepcoin Twitter"));
 	discordAction = new QAction(QIcon(":/icons/discord"), tr("Discord"), this);
-    discordAction->setToolTip(tr("DAPS Discord"));
+    discordAction->setToolTip(tr("Peepcoin Discord"));
 	telegramAction = new QAction(QIcon(":/icons/telegram"), tr("Telegram - Main"), this);
-    telegramAction->setToolTip(tr("DAPS Telegram - Main"));
+    telegramAction->setToolTip(tr("Peepcoin Telegram - Main"));
 	telegram2Action = new QAction(QIcon(":/icons/telegram"), tr("Telegram - Announcements"), this);
-    telegram2Action->setToolTip(tr("DAPS Telegram - Announcements"));
+    telegram2Action->setToolTip(tr("Peepcoin Telegram - Announcements"));
 	telegram3Action = new QAction(QIcon(":/icons/telegram"), tr("Telegram - How To"), this);
-    telegram3Action->setToolTip(tr("DAPS Telegram - How To"));
+    telegram3Action->setToolTip(tr("Peepcoin Telegram - How To"));
 	telegram4Action = new QAction(QIcon(":/icons/telegram"), tr("Telegram - Moon Spam"), this);
-    telegram4Action->setToolTip(tr("DAPS Telegram - Moon Spam"));
+    telegram4Action->setToolTip(tr("Peepcoin Telegram - Moon Spam"));
 	mediumAction = new QAction(QIcon(":/icons/medium"), tr("Medium"), this);
-    mediumAction->setToolTip(tr("DAPS Medium"));
+    mediumAction->setToolTip(tr("Peepcoin Medium"));
 	steemitAction = new QAction(QIcon(":/icons/steemit"), tr("Steemit"), this);
-    steemitAction->setToolTip(tr("DAPS Steemit"));
+    steemitAction->setToolTip(tr("Peepcoin Steemit"));
 	instagramAction = new QAction(QIcon(":/icons/instagram"), tr("Instagram"), this);
-    instagramAction->setToolTip(tr("DAPS Instagram"));
+    instagramAction->setToolTip(tr("Peepcoin Instagram"));
 	redditAction = new QAction(QIcon(":/icons/reddit"), tr("Reddit"), this);
-    redditAction->setToolTip(tr("DAPS Reddit"));
+    redditAction->setToolTip(tr("Peepcoin Reddit"));
 
 
     exportAction = new QAction(QIcon(":/icons/export"), tr("&Export..."), this);
@@ -648,27 +648,27 @@ void BitcoinGUI::aboutClicked()
 
 void BitcoinGUI::faqClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://www.dapscoin.com/wallets"));
+    QDesktopServices::openUrl(QUrl("https://www.peepcoin.io/peepcoin"));
 }
 
 void BitcoinGUI::faq2Clicked()
 {
-	QDesktopServices::openUrl(QUrl("https://www.dapscoin.com/staking"));
+    QDesktopServices::openUrl(QUrl("https://www.peepcoin.io/peepcoin"));
 }
 
 void BitcoinGUI::faq3Clicked()
 {
-	QDesktopServices::openUrl(QUrl("https://dapscoin.com/roadmap/#faq"));
+    QDesktopServices::openUrl(QUrl("https://www.peepcoin.io/peepcoin"));
 }
 
 void BitcoinGUI::swapClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://dapscoin.com/swap"));
+    QDesktopServices::openUrl(QUrl("https://www.peepcoin.io/peepcoin"));
 }
 
 void BitcoinGUI::whitepaperClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://dapscoin.com/whitepaper.pdf"));
+    QDesktopServices::openUrl(QUrl("https://www.peepcoin.io/peepcoin"));
 }
 
 void BitcoinGUI::tradeOgreBTCClicked()
@@ -703,47 +703,47 @@ void BitcoinGUI::otherExchangesClicked()
 
 void BitcoinGUI::facebookActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://www.facebook.com/dapscoinofficial/"));
+    QDesktopServices::openUrl(QUrl("https://www.facebook.com/PXNCoin/"));
 }
 void BitcoinGUI::twitterActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://twitter.com/DAPScoin"));
+    QDesktopServices::openUrl(QUrl("https://twitter.com/PXNofficial"));
 }
 void BitcoinGUI::discordActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://discord.gg/w898czA"));
+    QDesktopServices::openUrl(QUrl("https://discord.gg/eqhrP6"));
 }
 void BitcoinGUI::telegramActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://t.me/dapscoin"));
+    QDesktopServices::openUrl(QUrl("https://t.me/PXN_PCN"));
 }
 void BitcoinGUI::telegram2ActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://t.me/DAPSUpdates"));
+    QDesktopServices::openUrl(QUrl("https://t.me/PXNOFFCIAL"));
 }
 void BitcoinGUI::telegram3ActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://t.me/HOW_TO_DAPS"));
+    QDesktopServices::openUrl(QUrl("https://t.me/PXNOFFCIAL"));
 }
 void BitcoinGUI::telegram4ActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://t.me/DAPS_MOONSPAM"));
+    QDesktopServices::openUrl(QUrl("https://t.me/PXNOFFCIAL"));
 }
 void BitcoinGUI::mediumActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://medium.com/dapscoinofficial"));
+    QDesktopServices::openUrl(QUrl(""));
 }
 void BitcoinGUI::instagramActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://www.instagram.com/official_dapscoin/"));
+    QDesktopServices::openUrl(QUrl(""));
 }
 void BitcoinGUI::redditActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://www.reddit.com/r/DAPSCoin/"));
+    QDesktopServices::openUrl(QUrl(""));
 }
 void BitcoinGUI::steemitActionClicked()
 {
-	QDesktopServices::openUrl(QUrl("https://steemit.com/@dapscoin/"));
+    QDesktopServices::openUrl(QUrl(""));
 }
 
 

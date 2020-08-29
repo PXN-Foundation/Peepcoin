@@ -44,8 +44,8 @@ cd miniupnpc
 make -f Makefile upnpc-static
 sudo INSTALLPREFIX=/usr/local make install
 
-- Clone DAPSCoin GitHub
-https://github.com/DAPSCoin/PeepCoin-TheCoinForThePeople.git
+- Clone Peepcoin GitHub
+https://github.com/PXN-Foundation/Peepcoin
 
 - Change to PeepCoin-TheCoinForThePeople directory
 cd PeepCoin-TheCoinForThePeople/src

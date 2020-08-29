@@ -48,7 +48,7 @@ To Build
 From a fresh terminal:
 
 - Clone Latest Repo
-git clone https://github.com/DAPSCoin/PeepCoin-TheCoinForThePeople.git
+git clone https://github.com/PXN-Foundation/Peepcoin
 (This should download the latest official repo to a PeepCoin-TheCoinForThePeople folder)
 
 - Build Headless peepcoin (peepcoind):
