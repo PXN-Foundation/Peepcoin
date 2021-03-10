@@ -20,7 +20,7 @@ extern bool fStakeEnabled;
 extern bool fCombineEnabled;
 static inline unsigned short GetDefaultPort(const bool testnet = fTestNet)
 {
-    return testnet ? 18193 : 8193;
+    return testnet ? 17193 : 7193;
 }
 
 
